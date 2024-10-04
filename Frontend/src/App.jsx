@@ -1,15 +1,14 @@
-import { useState } from 'react'
+import { useState } from "react";
 
-import './App.css'
-import Signup from './components/SignUp/SignUp'
+import "./App.css";
+import Signup from "./components/SignUp/SignUp";
 
 function App() {
-
   return (
     <>
       <Signup />
     </>
-  )
+  );
 }
 
-export default App
+export default App;

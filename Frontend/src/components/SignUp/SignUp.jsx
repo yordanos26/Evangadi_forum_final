@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import classes from "./SignUp.module.css";
-
+import {Link}  from 'react-router-dom'
 const Signup = () => {
   const [formData, setFormData] = useState({
     username: "",
@@ -23,7 +23,7 @@ const Signup = () => {
     <div className={classes.signup_container}>
       <h2>Join the network</h2>
       <p>
-        Already have an account? <a href="/signin">Sign in</a>
+        Already have an account? <Link to="/login">Sign in</Link>
       </p>
       <form onSubmit={handleSubmit}>
         <input
@@ -70,12 +70,12 @@ const Signup = () => {
         />
         <p>
           I agree to the <a href="/privacy-policy">privacy policy</a> and{" "}
-          <a href="/terms">terms of service</a>.
+          <Link to="/terms">terms of service</Link>.
         </p>
         <button type="submit">Agree and Join</button>
       </form>
       <p>
-        Already have an account? <a href="/signin">Sign in</a>
+        Already have an account? <Link to="/login">Sign in</Link>
       </p>
     </div>
   );
