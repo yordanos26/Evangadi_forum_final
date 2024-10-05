@@ -1,0 +1,122 @@
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo img {
+  max-width: 150px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navLinkItem {
+  margin-left: 20px;
+}
+
+.navLinkItem a,
+.logoutButton {
+  /* color: #000; */
+  text-decoration: none;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.logoutButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+.signInButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  /* padding: 8px 16px; */
+  cursor: pointer;
+}
+.signInButton a {
+  color: #fff;
+}
+/* Blue color for Sign In button - only on desktop */
+@media (min-width: 768px) {
+  .navLinkItem a.signInLink {
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text */
+    border-radius: 4px; /* Optional rounded corners */
+  }
+}
+
+/* Mobile menu icon */
+.mobileMenuIcon {
+  display: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Mobile dropdown menu */
+.mobileDropdown {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.mobileDropdown ul {
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+}
+
+.mobileDropdown ul li {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.mobileDropdown ul li a {
+  color: #000;
+  text-decoration: none;
+}
+
+.mobileDropdown ul li a:hover {
+  background-color: #f1f1f1;
+}
+
+/* Hide desktop menu on mobile */
+@media (max-width: 768px) {
+  .navLinks {
+    display: none;
+  }
+  
+
+  .mobileMenuIcon {
+    display: block;
+  }
+}
+@media(min-width: 768px) {
+    .mobileDropdown{
+      display: none;
+    }
+  }
