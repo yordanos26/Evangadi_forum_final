@@ -1,17 +1,17 @@
-import { useState } from 'react'
+import { useState } from "react";
 
-import './App.css'
+import "./App.css";
+import Signup from "./components/SignUp/SignUp";
 
 
 function App() {
-
   return (
     <>
-      <h1>Evangadi  Forum Project</h1>
 
+           <Signup />
 
     </>
-  )
+  );
 }
 
-export default App
+export default App;

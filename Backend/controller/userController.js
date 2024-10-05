@@ -14,7 +14,7 @@ async function register(req, res) {
   try {
     // Query to check if the username or email already exists in the database
     const [existingUser] = await dbconnection.query(
-      "SELECT username, userid FROM userTable WHERE username = ? OR email = ?",
+      "SELECT username, userid FROM users WHERE username = ? OR email = ?",
       [username, email]
     );
 
@@ -38,7 +38,7 @@ async function register(req, res) {
     // Proceed to insert the new user if no existing record is found
     // Assuming dbconnection is a valid connection instance
     await dbconnection.query(
-      "INSERT INTO userTable (username, firstname, lastname, email, password) VALUES (?,?,?,?,?)",
+      "INSERT INTO users (username, firstname, lastname, email, password) VALUES (?,?,?,?,?)",
       [username, firstname, lastname, email, hashedPassword]
     );
 
@@ -68,7 +68,7 @@ async function login(req, res) {
   try {
     // Check if the user exists by email
     const [user] = await dbconnection.query(
-      "SELECT * FROM userTable WHERE email = ?",
+      "SELECT * FROM users WHERE email = ?",
       [email]
     );
     // If user is not found
