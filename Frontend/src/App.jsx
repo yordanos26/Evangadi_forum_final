@@ -1,13 +1,14 @@
-// App.js
-import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-// import Header from './components/Header/Header';
+import { useState } from "react";
 
-// import Footer from "./components/Footer/Footer";
+import "./App.css";
+import Signup from "./components/SignUp/SignUp";
 
 function App() {
-  <>
-  </>
+  return (
+    <>
+      <Signup />
+    </>
+  );
 }
 
 export default App;
