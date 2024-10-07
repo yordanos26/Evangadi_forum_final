@@ -59,8 +59,10 @@ async function question(req, res) {
 
 async function getAllQuestions(req, res) {
   try {
+        const username = req.user.username; // Get the username from the auth middleware
+
 const [results] = await dbConnection.query('SELECT u.username, q.title FROM questions q, users u where q.userid=u.userid'); // Use await and destructure the result
-      res.json(results); // Send the result as a JSON response
+      res.json({username, results});  // Send the result as a JSON response
   } catch (err) {
       res.status(500).json({ error: err.message }); // Handle errors properly
   }
