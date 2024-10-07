@@ -12,7 +12,7 @@ const About = () => {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.link}>About</h2>
+      <small className={styles.link}>About</small>
       <h1 className={styles.title}>Evangadi Networks</h1>
       <p className={styles.text}>
         No matter what stage of life you are in, whether you’re just starting

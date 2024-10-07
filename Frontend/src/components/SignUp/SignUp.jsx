@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import classes from "./SignUp.module.css";
 import {Link}  from 'react-router-dom'
-const Signup = () => {
+const Signup = ({onToggle}) => {
   const [formData, setFormData] = useState({
     username: "",
     firstName: "",
@@ -23,7 +23,7 @@ const Signup = () => {
     <div className={classes.signup_container}>
       <h2>Join the network</h2>
       <p>
-        Already have an account? <Link to="/login">Sign in</Link>
+        Already have an account? <Link to="" onClick={onToggle} >Sign in</Link>
       </p>
       <form onSubmit={handleSubmit}>
         <input
@@ -75,7 +75,7 @@ const Signup = () => {
         <button type="submit">Agree and Join</button>
       </form>
       <p>
-        Already have an account? <Link to="/login">Sign in</Link>
+        <Link to=""  onClick={onToggle} >Already have an account? </Link>
       </p>
     </div>
   );

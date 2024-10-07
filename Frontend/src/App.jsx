@@ -1,15 +1,12 @@
 import { useState } from "react";
 
 import "./App.css";
-import Signup from "./components/SignUp/SignUp";
-import Header from './components/Header/Header'
-import Footer from './components/Footer/Footer'
+import RouterApp from "./Routes/Router";
+
 function App() {
   return (
     <>
-    <Header/>
-      <Signup />
-      <Footer/>
+      <RouterApp />
     </>
   );
 }

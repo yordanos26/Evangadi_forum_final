@@ -1,0 +1,32 @@
+/* AuthPage.module.css */
+.authContainer {
+    
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+  height: 80vh;
+  background-image: url('../../assets/10001.svg');
+  background-size: cover;
+  background-position: center;
+}
+
+.authContent{
+  padding: 20px;
+  max-width: 60%;
+  margin: 0 auto;
+  /* max-width: 400px;
+  padding: 20px; */
+}
+  
+.about{
+    width: 40%;
+}
+
+@media (max-width: 480px) {
+    .authContainer{
+  display: block;
+  width: 100%;
+
+    }
+}

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 // import axios from 'axios';
 import styles from './Login.module.css';
+import { Link } from 'react-router-dom';
 
 
-const Login = () => {
+const Login = ({onToggle}) => {
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
@@ -47,7 +48,7 @@ return (
     <div className={styles.loginContainer}>
     <h2 className={styles.title}>Login to your account</h2>
     <p className={styles.subtitle}>
-        Don’t have an account? <a href="#" className={styles.createAccount}>Create a new account</a>
+        Don’t have an account? <Link to=""  onClick={onToggle} className={styles.createAccount}>Create a new account</Link>
     </p>
     <form className={styles.loginForm} onSubmit={handleSubmit}>
         <div className={styles.inputGroup}>
