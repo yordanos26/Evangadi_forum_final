@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import classes from "./SignUp.module.css";
-import {Link}  from 'react-router-dom'
-const Signup = ({onToggle}) => {
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+const Signup = ({ onToggle }) => {
   const [formData, setFormData] = useState({
     username: "",
     firstName: "",
@@ -9,21 +11,60 @@ const Signup = ({onToggle}) => {
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
+  const [error, setError] = useState(null); // for error message
+  const [success, setSuccess] = useState(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add API integration call here
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5500/api/users/register",
+        {
+          // Sending user registration data
+          username: formData.username,
+          firstname: formData.firstName,
+          lastname: formData.lastName,
+          email: formData.email,
+          password: formData.password,
+        }
+      );
+      if (response.status === 200) {
+        setSuccess("You registered successfully!"); // Handle success response
+        setError(null); // clear any previous errors
+        navigate("/Auth");
+      } else {
+        setError(response.data.msg || "Registration failed."); // Handle error response
+        setSuccess(null); // clear any previous success message
+      }
+    } catch (err) {
+      setError(
+        err.response?.data?.msg ||
+          "Error submitting the form. Please try again."
+      ); // Enhanced error handling
+      setSuccess(null); // clear any previous success message
+    }
   };
 
   return (
     <div className={classes.signup_container}>
+      <div className={classes.Error_container}>
+        {/* Display error message */}
+        {error && <p className={classes.error}>{error}</p>}
+        {/* Display success message */}
+        {success && <p className={classes.success}>{success}</p>}{" "}
+      </div>
       <h2>Join the network</h2>
       <p>
-        Already have an account? <Link to="" onClick={onToggle} >Sign in</Link>
+        Already have an account?{" "}
+        <Link to="/login" onClick={onToggle}>
+          Sign in
+        </Link>
       </p>
       <form onSubmit={handleSubmit}>
         <input
@@ -75,7 +116,9 @@ const Signup = ({onToggle}) => {
         <button type="submit">Agree and Join</button>
       </form>
       <p>
-        <Link to=""  onClick={onToggle} >Already have an account? </Link>
+        <Link to="/login" onClick={onToggle}>
+          Already have an account?{" "}
+        </Link>
       </p>
     </div>
   );
