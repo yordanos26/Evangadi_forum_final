@@ -21,10 +21,10 @@ const questionRoute = require("./routes/questionRoute");
 // //questions router middleware
 app.use("/api/questions", authenticationMiddleware, questionRoute);
 
-// //answers router middleware file
-// const answerRoute = require("./routes/answerRoute");
-// //answers router middleware
-// app.use("/api/answers", answerRoute);
+//answers router middleware file
+const answerRoute = require("./routes/answerRoute");
+//answers router middleware
+app.use("/api/answers", authenticationMiddleware, answerRoute);
 
 async function start() {
   try {
