@@ -46,16 +46,26 @@ function Home() {
   };
 
   // Filter questions based on search term
-  const filteredQuestions = questions.filter((q) =>
-    q.title.toLowerCase().includes(searchTerm)
-  );
+ const filteredQuestions = questions.filter((q) =>
+  q.title.toLowerCase().includes(searchTerm)
+);
+
+
+// Navigate to the "Ask Question" page
+const handleAskQuestionClick = () => {
+  navigate("/questions/ask"); // Navigate to the "Ask Question" page
+};
+
 
   return (
     <Layout>
       {/* Main Content */}
       <main className={styles.mainContent}>
         <div className={styles.headerContainer}>
-          <button className={styles.askButton}>Ask Question</button>
+        <button className={styles.askButton} onClick={handleAskQuestionClick}>
+           Ask Question
+         </button>
+
           <h2>Welcome: {user.username}</h2>
         </div>
 
@@ -88,9 +98,14 @@ function Home() {
             // Question List
             <ul className={styles.questionList}>
               {filteredQuestions.map((q, index) => (
-                <Link to={`/getQuestions/${q.questionid}`} key={index} className={styles.questionLink}>
-                <li key={index} className={styles.questionItem}>
+                <Link
+                to={`/getQuestions/${q.questionid}`}
+                key={index}
+                className={styles.questionLink}
+              >
+                <li className={styles.questionItem}>
                   <img
+ 
                     alt={q.username}
                     src={q.avatarUrl}
                     className={styles.questionAvatar}
