@@ -1,12 +1,14 @@
 
 .headerContainer {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   padding: 10px 20px;
   background-color: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   height: 40px;
+  margin:0 auto;
+
 }
 
 .logo img {
@@ -42,14 +44,14 @@
 }
 
 .logoutButton {
-  background-color: #007bff;
+  background-color: #e5670a;
   color: white;
   border: none;
   padding: 8px 16px;
   cursor: pointer;
 }
 .signInButton {
-  background-color: #007bff;
+  background-color: #e5670a;
   color: white;
   border: none;
   /* padding: 8px 16px; */

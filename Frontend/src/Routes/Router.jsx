@@ -8,7 +8,7 @@ import Auth from "../pages/Auth/Auth";
 import { createContext } from "react";
 import axiosBaseURL from "../Utility/ApiConfig";
 
-import axios from "axios";
+// import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export const AppState = createContext();
@@ -22,6 +22,7 @@ function RouterApp() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
+      // console.log(data);
       setUser(data);
     } catch (error) {
       console.log(error.response);
@@ -37,7 +38,7 @@ function RouterApp() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Auth />} />
-        <Route path="/questions" element={<Question />} />
+        <Route path="/questions/getQuestions/:questionid" element={<Question />} />
         <Route path="/question/:questionid" element={<Answer />} />
         <Route path="/login" element={<Auth />} />
         <Route path="*" element={<NotFound />} />

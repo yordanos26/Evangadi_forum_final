@@ -1,0 +1,199 @@
+
+.mainContent {
+  padding: 20px;
+  max-width: 1300px;
+  margin: auto;
+}
+
+/* Header container styling */
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Ask button styles */
+.askButton {
+  background-color: linear-gradient(310deg, #ff7800, #e33f00);; /* Company primary color */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+/* Button hover effect */
+.askButton:hover {
+  background-color: #e5670a; /* Slightly darker shade */
+}
+
+/* Search container styling */
+.searchContainer {
+  margin: 20px 0;
+  text-align: center;
+}
+
+/* Search input field styling */
+.searchInput {
+  padding: 10px 20px;
+  width: 100%;
+  max-width: 500px; /* Max width for the search bar */
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  outline: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+/* Search input focus effect */
+.searchInput:focus {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-color: #FE750B; /* Company color for focus */
+}
+
+/* Question header styling */
+.questionHeader {
+  font-size: 24px;
+  margin: 20px 0;
+}
+
+/* Question list styles */
+.questionList {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Individual question item styles */
+.questionItem {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  transition: box-shadow 0.2s;
+}
+
+/* Question item hover effect */
+.questionItem:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Avatar styles */
+.questionAvatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+/* Question text styles */
+.questionText {
+  flex: 1;
+}
+
+/* Question button styles */
+.questionButton {
+  background-color: #e5670a; /* Company primary color */
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Loading spinner styles */
+.loadingSpinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px; /* Adjust height as needed */
+}
+
+/* Spinner animation */
+.spinner {
+  border: 5px solid #ccc; /* Light gray border */
+  border-top: 5px solid #FE750B; /* Company color for the top */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+}
+
+/* Spinner animation keyframes */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 600px) {
+  .askButton {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .searchInput {
+    width: 90%; /* Ensure search input takes full width on mobile */
+    font-size: 14px;
+  }
+}
+
+
+.noMatchMessage {
+  text-align: center;
+  font-size: 18px;
+  color: #555; /* Gray color for the message */
+  margin: 20px 0; /* Space above and below */
+}
+
+
+/* Home.module.css */
+
+/* Ask Button styles */
+.askButton {
+  background-color: #fe750b; /* Primary color */
+  color: white; /* Text color */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px 20px; /* Padding for button */
+  font-size: 16px; /* Font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth background color transition */
+  flex-shrink: 0; /* Prevent shrinking in flex containers */
+}
+
+.askButton:hover {
+  background-color: #e6640d; /* Darker shade on hover */
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .askButton {
+    font-size: 14px; /* Smaller font size on smaller screens */
+    padding: 8px 16px; /* Less padding */
+    width: 40%;
+  }
+}
+
+@media (max-width: 480px) {
+  .askButton {
+    font-size: 12px; /* Even smaller font size */
+    padding: 6px 12px; /* Further reduce padding */
+    width: 40%; /* Full width on small screens */
+  }
+}
+
+
+.questionAvatar{
+    /* border:#e5670a; */
+    border-radius: 3px solid #e5670a;
+}
+
+.questionLink{
+    text-decoration: none;
+    color: black;
+}
