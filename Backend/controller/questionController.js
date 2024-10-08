@@ -2,15 +2,6 @@ const dbConnection = require("../db/config"); // database connection
 const { StatusCodes } = require("http-status-codes");
 const { v4: uuidv4 } = require("uuid"); // random generator
 
-// async function allQuestions(req, res) {
-//   res.send("get all questions");
-// }
-
-// async function singleQuestion(req, res) {
-//   res.send("get single question");
-// }
-
-
 // Post question part
 async function question(req, res) {
   const { title, description } = req.body;
@@ -55,16 +46,17 @@ async function question(req, res) {
       .json({ msg: "Unexpected error occured." });
   }
 }
-
-
+// get all question
 async function getAllQuestions(req, res) {
   try {
-        const username = req.user.username; // Get the username from the auth middleware
+    const username = req.user.username; // Get the username from the auth middleware
 
-const [results] = await dbConnection.query('SELECT u.username, q.title FROM questions q, users u where q.userid=u.userid'); // Use await and destructure the result
-      res.json({username, results});  // Send the result as a JSON response
+    const [results] = await dbConnection.query(
+      "SELECT u.username, q.title FROM questions q, users u where q.userid=u.userid"
+    ); // Use await and destructure the result
+    res.json({ username, results }); // Send the result as a JSON response
   } catch (err) {
-      res.status(500).json({ error: err.message }); // Handle errors properly
+    res.status(500).json({ error: err.message }); // Handle errors properly
   }
 }
 
@@ -73,32 +65,34 @@ async function getQuestionDetail(req, res) {
   const { questionid } = req.params;
 
   try {
-      // Fetch question details
-      const [questionResult] = await dbConnection.query(
-          'SELECT questionid, title FROM questions WHERE questionid = ?',
-          [questionid]
-      );
+    // Fetch question details
+    const [questionResult] = await dbConnection.query(
+      "SELECT questionid, title FROM questions WHERE questionid = ?",
+      [questionid]
+    );
 
-      // If no question found, return a 404 error
-      if (questionResult.length === 0) {
-          return res.status(404).json({ error: 'Question not found' });
-      }
+    // If no question found, return a 404 error
+    if (questionResult.length === 0) {
+      return res.status(404).json({ error: "Question not found" });
+    }
 
-      // Fetch answers along with the user who posted the answer
-      const [answersResult] = await dbConnection.query(
-          `SELECT a.answerid, a.answer, u.username FROM answers a
+    // Fetch answers along with the user who posted the answer
+    const [answersResult] = await dbConnection.query(
+      `SELECT a.answerid, a.answer, u.username FROM answers a
           LEFT JOIN users u ON a.userid = u.userid
-          WHERE a.questionid = ?`, [questionid]);
+          WHERE a.questionid = ?`,
+      [questionid]
+    );
 
-      // Combine question details and answers into one response
-      const response = {
-          question: questionResult[0],  // The question detail
-          answers: answersResult        // List of answers with usernames
-      };
+    // Combine question details and answers into one response
+    const response = {
+      question: questionResult[0], // The question detail
+      answers: answersResult, // List of answers with usernames
+    };
 
-      res.json(response); // Send the response as a JSON object
+    res.json(response); // Send the response as a JSON object
   } catch (err) {
-      res.status(500).json({ error: err.message }); // Handle errors
+    res.status(500).json({ error: err.message }); // Handle errors
   }
 }
 

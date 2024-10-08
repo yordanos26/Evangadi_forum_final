@@ -1,4 +1,4 @@
-const dbconnection = require("../db/config");
+const dbconnection = require("../db/config");// database connection
 
 // function to retrieve answers for a specific question
 const allAnswers = async (req, res) => {
@@ -45,6 +45,7 @@ const allAnswers = async (req, res) => {
   }
 };
 
+// function to post an answer
 const postAnswer = async (req, res) => {
   const { questionid, answer } = req.body; // Extracts questionid and answer from the request body.
   const userid = req.user.userid; // Extracts the user ID from the request object.
