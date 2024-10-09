@@ -1,114 +1,141 @@
-/* All div */
-.all{
-    margin: 10px 70px;
-    font-family: sans-serif;
- }
- /* first div or steps div */
+.heading {
+  font-size: 2rem;
+  color: #333;
+  margin: 20px;
+  text-align: center;
+  font-style: italic;
+}
 
- .steps h3{
- font-size: 23px;
- font-weight: 600;
- margin-left: 70px;
- }
- 
- 
- .steps ul li {
-    color: rgb(58, 57, 57);
-    font-size: 15px;
-    padding: 2px;
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    gap: 10px;
- }
- .steps ul li p{
-    color: rgb(58, 57, 57);
-    font-size: 21px;
-    margin-top: 0;
- }
- .heading{
-   font-size: 30px;
-   font-weight: 600;
-   text-align: center;
- }
- /* second div or Ask question div  */
- .question{
-    text-align: center;
-    -webkit-box-shadow: 17px 17px 10px -16px rgba(169, 171, 174);
-    -moz-box-shadow: 17px 17px 10px -16px rgba(169, 171, 174);
-    box-shadow: 17px 17px 10px -16px rgb(169, 171, 174);
-    border-radius: 10px;
-    margin: 7% 10% 0;
- }
- .question h3{
-    font-size: 23px;
-    font-weight: 600;
- }
- .question a{
-    color: rgb(87, 86, 86);
-    text-decoration: none;
-    margin-bottom: 20px;
- }
- .question input, .question textarea{
-    width: 99%;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    border: 1.3px solid rgb(181, 178, 178);
-    font-size: 15px;
- }
- 
- 
- .box{
-    margin: 0 10%;
- }
- .input1{
-    padding:10px 0 20px 10px;
-    margin-top: 10px;
- }
- .input2{
-    padding:10px 0 150px 10px;
- }
- .btn{
-    background-color: #516cf1;
-    border: none;
-    padding: 10px;
-    border-radius: 4px;
-    color: #fff;
-    font-size: 15px;
-    text-align: left;
-    cursor: pointer;
- }
- .btnholder{
-    padding: 0 10% 0.5% 10%;
-    text-align: start;
- }
- /* responsive code*/
- @media screen and (max-width: 768px) {
-    .all {
-        margin: 10px 15px;
+.all {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+
+}
+
+.steps {
+  width: 100%;
+}
+
+.steps h3 {
+  font-size: 1.5rem;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.checklist {
+  list-style: none;
+  padding: 0;
+}
+
+.checklistItem {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.checklistItem p {
+  margin-left: 15px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.checklistItem:last-child {
+  border-bottom: none;
+}
+
+.icon {
+  color: #d97400;
+}
+
+.question {
+  width: 100%;
+}
+
+.question h3 {
+  font-size: 1.5rem;
+  color: #555;
+  margin-bottom: 10px;
+  font-style: italic;
+
+}
+
+
+.input1, .input2 {
+  width:100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  color: #333;
+  background-color: #fff;
+  transition: border-color 0.3s;
+}
+
+.inputholder {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
+
+.btnholder {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.btn {
+  background-image: var(--button-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+
+
+
+
+
+.line {
+    border: none; /* Remove default border */
+    height: 4px; /* Thickness of the line */
+    width: 100%; /* Full width */
+    background: transparent; /* Background set to transparent */
+    position: relative; /* Positioning for animation */
+    overflow: hidden; /* Prevent overflow during animation */
+}
+
+.line::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 50%; /* Only half of the line */
+    background: linear-gradient(90deg, #FE750B, #FFB658); /* Gradient color */
+    animation: loading 2s backwards; /* Animation effect */
+}
+
+@keyframes loading {
+    0% {
+        transform: translateX(-100%); /* Start off-screen left */
     }
-    .steps {
-        margin: 0 10%;
+    100% {
+        transform: translateX(100%); /* End off-screen right */
     }
-    .box,.btnholder {
-        margin: 0 5%;
-    }
-    .question {
-        margin: 7% 3% 0;
-    }
-    .steps h3, .question h3 {
-        font-size: 18px;
-    }
-    .steps ul li, .question input, .question textarea {
-        font-size: 13px;
-    }
-    .input2 {
-        padding: 10px 0 30px 20px;
-    }
-    .btn {
-        padding: 8px;
-        font-size: 14px;
-    }
- } 
+}
+
+

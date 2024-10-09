@@ -44,52 +44,56 @@ function Question() {
   return (
     <>
       <Layout>
-        <h1 className={classes.heading}>Question</h1>
-        <div className={classes.all}>
-          <div className={classes.steps}>
-            <h3>Steps to write good question</h3>
-            <ul style={{ listStyle: "none" }}>
-              <li>
-                <FaCircleArrowRight size={30} color="#e5670a" />
-                <p>Summarize your problem in a one-line title</p>
-              </li>
-              <li>
-                <FaCircleArrowRight size={30} color="#e5670a" />
-                <p>Describe your problem in more detail</p>
-              </li>
-              <li>
-                <FaCircleArrowRight size={30} color="#e5670a" />
-                <p>Describe what you tried and what you expected to happen</p>
-              </li>
-              <li>
-                <FaCircleArrowRight size={30} color="#e5670a" />
-                <p>Review your question and post it to the site</p>
-              </li>
-            </ul>
-          </div>
-          <div className={classes.question}>
-            <h3>Ask a public question</h3>
-            <form className={classes.box} onSubmit={handleSubmit}>
-              <input
-                type="text"
-                placeholder="Title"
-                className={classes.input1}
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-              <textarea
-                type="text"
-                placeholder="Question Description..."
-                className={classes.input2}
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-              <div className={classes.btnholder}>
-                <button type="submit" className={classes.btn}>
-                  Post Your Question
-                </button>
+        <div>
+          <h1 className={classes.heading}>What Do You Want to Know?</h1>
+          <div className={classes.all}>
+            <div className={classes.steps}>
+              <h3 className={classes.heading_title}>Steps to Write a Good Question</h3>
+              <hr className={classes.line}/>
+              <ul className={classes.checklist}>
+                <li className={classes.checklistItem}>
+                  <FaCircleArrowRight size={30} className={classes.icon} />
+                  <p>Summarize your problem in a one-line title</p>
+                </li>
+                <li className={classes.checklistItem}>
+                  <FaCircleArrowRight size={30} className={classes.icon} />
+                  <p>Describe your problem in more detail</p>
+                </li>
+                <li className={classes.checklistItem}>
+                  <FaCircleArrowRight size={30} className={classes.icon} />
+                  <p>Describe what you tried and what you expected to happen</p>
+                </li>
+                <li className={classes.checklistItem}>
+                  <FaCircleArrowRight size={30} className={classes.icon} />
+                  <p>Review your question and post it to the site</p>
+                </li>
+              </ul>
+            </div>
+            <div className={classes.question}>
+              <h3>What’s On Your Mind? Ask Away</h3>
+              <form className={classes.box} onSubmit={handleSubmit}>
+              <div className={classes.inputholder}> 
+                <input
+                  type="text"
+                  placeholder="Question Title..."
+                  className={classes.input1}
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+                <textarea
+                  placeholder="Question Description "
+                  className={classes.input2}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
               </div>
-            </form>
+                <div className={classes.btnholder}>
+                  <button type="submit" className={classes.btn}>
+                    Post Your Question
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </Layout>
