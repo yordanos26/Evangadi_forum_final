@@ -1,0 +1,81 @@
+.how-it-works {
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.how-it-works h1 {
+  text-align: center;
+  color: #2d8cf0;
+  margin-bottom: 40px;
+}
+
+/* General Section Styles */
+.section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 60px;
+  gap: 40px;
+}
+
+/* Alternating Layout */
+.section-left .text {
+  order: 1; /* Text on left */
+}
+.section-left .image {
+  order: 2; /* Image on right */
+}
+
+.section-right .text {
+  order: 2; /* Text on right */
+  text-align: left;
+}
+.section-right .image {
+  order: 1; /* Image on left */
+}
+
+/* Styling for text blocks */
+.text {
+  flex: 1;
+  font-size: 18px;
+}
+
+.text h2 {
+  color: #2d8cf0;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.text ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+.text ul li {
+  margin-bottom: 10px;
+  list-style: none;
+}
+/* Styling for images */
+.image {
+  flex: 1;
+}
+
+.image img {
+  width: 100%;
+  height: auto;
+  max-width: 500px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+  .section {
+    flex-direction: column;
+  }
+
+  .image img {
+    max-width: 100%;
+  }
+}
