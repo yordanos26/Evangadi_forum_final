@@ -39,11 +39,14 @@ function RouterApp() {
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/questions/ask" element={<Question />} />
+        
 
+        <Route
+          path="/questions/getQuestions/:questionid"
+          element={<Question />}
+        />
 
-       <Route path="/questions/getQuestions/:questionid" element={<Question />} />
-
-        <Route path="/question/:questionid" element={<Answer />} />
+        <Route path="/getQuestions/:questionid"  element={<Answer />} />
         <Route path="/login" element={<Auth />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
