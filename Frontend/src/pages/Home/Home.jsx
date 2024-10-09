@@ -4,7 +4,7 @@ import styles from "./Home.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { AppState } from "../../Routes/Router";
 import axiosBaseURL from "../../Utility/ApiConfig";
-
+import { RiAccountCircleFill } from "react-icons/ri";
 function Home() {
   const { user } = useContext(AppState);
   const [questions, setQuestions] = useState([]); // To store questions
@@ -46,25 +46,23 @@ function Home() {
   };
 
   // Filter questions based on search term
- const filteredQuestions = questions.filter((q) =>
-  q.title.toLowerCase().includes(searchTerm)
-);
+  const filteredQuestions = questions.filter((q) =>
+    q.title.toLowerCase().includes(searchTerm)
+  );
 
-
-// Navigate to the "Ask Question" page
-const handleAskQuestionClick = () => {
-  navigate("/questions/ask"); // Navigate to the "Ask Question" page
-};
-
+  // Navigate to the "Ask Question" page
+  const handleAskQuestionClick = () => {
+    navigate("/questions/ask"); // Navigate to the "Ask Question" page
+  };
 
   return (
     <Layout>
       {/* Main Content */}
       <main className={styles.mainContent}>
         <div className={styles.headerContainer}>
-        <button className={styles.askButton} onClick={handleAskQuestionClick}>
-           Ask Question
-         </button>
+          <button className={styles.askButton} onClick={handleAskQuestionClick}>
+            Ask Question
+          </button>
 
           <h2>Welcome: {user.username}</h2>
         </div>
@@ -88,31 +86,36 @@ const handleAskQuestionClick = () => {
           <div className={styles.loadingSpinner}>
             <div className={styles.spinner}></div>
           </div>
+        ) : // Check for no matches found
+        filteredQuestions.length === 0 ? (
+          <div className={styles.noMatchMessage}>
+            No matching questions found.
+          </div>
         ) : (
-          // Check for no matches found
-          filteredQuestions.length === 0 ? (
-            <div className={styles.noMatchMessage}>
-              No matching questions found.
-            </div>
-          ) : (
-            // Question List
-            <ul className={styles.questionList}>
-              {filteredQuestions.map((q, index) => (
-                <Link
+          // Question List
+          <ul className={styles.questionList}>
+            {filteredQuestions.map((q, index) => (
+              <Link
                 to={`/getQuestions/${q.questionid}`}
                 key={index}
                 className={styles.questionLink}
               >
                 <li className={styles.questionItem}>
-                  <img
+                  {/* <img
  
                     alt={q.username}
                     src={q.avatarUrl}
                     className={styles.questionAvatar}
-                  />
+                  /> */}
+                  <div className={styles.questionInfo}>
+                    <RiAccountCircleFill
+                      size={80}
+                      className={styles.questionAvatar}
+                    />
+                    <p>{q.username}</p>
+                  </div>
                   <div className={styles.questionText}>
                     <strong>{q.title}</strong>
-                    <p>{q.username}</p>
                   </div>
                   <button
                     onClick={() => handleQuestionClick(q.questionid)}
@@ -122,10 +125,9 @@ const handleAskQuestionClick = () => {
                   </button>
                   <hr />
                 </li>
-                </Link>
-              ))}
-            </ul>
-          )
+              </Link>
+            ))}
+          </ul>
         )}
       </main>
     </Layout>

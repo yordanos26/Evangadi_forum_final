@@ -13,7 +13,7 @@
 
 /* Ask .btn styles */
 .askButton {
-  background-color: var(--primary-color);
+  background-image: var(--button-color);
   color: white;
   border: none;
   border-radius: 5px;
@@ -98,6 +98,12 @@
   flex: 1;
 }
 
+.questionInfo{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
 /* Question .btn styles */
 .questionButton {
   background: linear-gradient(to right, #fe750b, #007bff);
