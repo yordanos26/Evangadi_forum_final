@@ -17,12 +17,12 @@ async function question(req, res) {
     // console.log(questionid);
     const tag = new Date().toISOString().slice(0, 19).replace("T", " "); // to get the created date
     const [question] = await dbConnection.query(
-      "select * from questions where title = ? and userid= ?",
+      "select * from questions where title = ? and userid= ? and description= ?",
       [title, userid, description]
     );
     // console.log(question);
 
-    if (question.length > 0 && userid != 0) {
+    if (question.length > 0 && userid != 0 && description) {
       return res
         .status(StatusCodes.BAD_REQUEST)
         .json({ msg: "You already created a question" });
@@ -52,7 +52,7 @@ async function getAllQuestions(req, res) {
     const username = req.user.username; // Get the username from the auth middleware
 
     const [results] = await dbConnection.query(
-      "SELECT u.username, q.title FROM questions q, users u where q.userid=u.userid"
+      "SELECT u.username, q.title ,q.questionid FROM questions q, users u where q.userid=u.userid order by tag DESC"
     ); // Use await and destructure the result
     res.json({ username, results }); // Send the result as a JSON response
   } catch (err) {
@@ -67,7 +67,7 @@ async function getQuestionDetail(req, res) {
   try {
     // Fetch question details
     const [questionResult] = await dbConnection.query(
-      "SELECT questionid, title FROM questions WHERE questionid = ?",
+      "SELECT questionid,description,title FROM questions WHERE questionid = ?",
       [questionid]
     );
 
