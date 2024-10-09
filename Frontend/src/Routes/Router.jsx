@@ -10,6 +10,7 @@ import axiosBaseURL from "../Utility/ApiConfig";
 
 // import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import HowItWorks from "../components/How it works/Howitworks";
 
 export const AppState = createContext();
 function RouterApp() {
@@ -33,8 +34,11 @@ function RouterApp() {
   useEffect(() => {
     checkUser();
   }, []);
+
+  //  const isLoggedIn = user && user.id;
   return (
     <AppState.Provider value={{ user, setUser }}>
+    
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Auth />} />
@@ -48,6 +52,7 @@ function RouterApp() {
 
         <Route path="/getQuestions/:questionid"  element={<Answer />} />
         <Route path="/login" element={<Auth />} />
+        <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AppState.Provider>
