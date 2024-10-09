@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import axiosBaseURL from "../../Utility/ApiConfig";
 import Layout from "../../components/Layout/Layout";
 import { Link } from "react-router-dom";
+import classes from "./Answer.module.css"; // Import the CSS module
 
 const Answer = () => {
   const { questionid } = useParams();
@@ -12,12 +13,11 @@ const Answer = () => {
   const [submitting, setSubmitting] = useState("");
   const [duplicatepost, setDuplicatepost] = useState("");
 
-  // Fetch question and answers from API
   useEffect(() => {
     const fetchQuestion = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5500/api/questions/getQuestions/${questionid}`,
+        const response = await axiosBaseURL.get(
+          `/questions/getQuestions/${questionid}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -26,7 +26,6 @@ const Answer = () => {
         );
         setQuestion(response.data.question);
         setAnswers(response.data.answers || []);
-        console.log("Fetched question:", response.data);
       } catch (error) {
         console.error("Failed to fetch question:", error);
       }
@@ -35,11 +34,10 @@ const Answer = () => {
     fetchQuestion();
   }, [questionid]);
 
-  // Handle answer submission
   const handleAnswerSubmit = async () => {
     try {
-      await axios.post(
-        `http://localhost:5500/api/answers`,
+      await axiosBaseURL.post(
+        `/answers`,
         { questionid, answer },
         {
           headers: {
@@ -49,8 +47,7 @@ const Answer = () => {
       );
 
       setSubmitting("Answer submitted");
-      console.log("Answer submitted:", answer);
-      setAnswer(""); // Reset the input field after submitting
+      setAnswer("");
     } catch (error) {
       console.error("Failed to submit answer:", error);
       setSubmitting("");
@@ -60,77 +57,56 @@ const Answer = () => {
 
   return (
     <Layout>
-      <div style={{ maxWidth: "800px", margin: "auto", padding: "20px" }}>
+      <div className={classes.container}>
         {/* Question Section */}
-        <div style={{ marginBottom: "30px" }}>
-          <h4>Question</h4>
+        <div className={classes.questionSection}>
+          <h4 className={classes.questionTitle}>Question</h4>
           {question.title ? (
             <>
-              <h6 style={{ color: "gray" }}>{question.title}</h6>
-              <p style={{ color: "gray" }}>{question.description}</p>
+              <h6 className={classes.questionDetails}>{question.title}</h6>
+              <p className={classes.questionDescription}>{question.description}</p>
             </>
           ) : (
-            <h6 style={{ color: "gray" }}>Loading question...</h6>
+            <h6 className={classes.questionDetails}>Loading question...</h6>
           )}
         </div>
 
         {/* Community Answer Section */}
-        <div style={{ marginBottom: "40px" }}>
-          <h5>Answers From The Community</h5>
+        <div className={classes.answersSection}>
+          <h5>Answer From The Community</h5>
 
           {answers && answers.length > 0 ? (
             answers.map((answer, index) => (
-              <div
-                key={index}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  marginTop: "20px",
-                }}
-              >
+              <div key={index} className={classes.answerItem}>
                 <img
                   alt={answer.username}
                   src={answer.avatarUrl}
-                  style={{
-                    width: "56px",
-                    height: "56px",
-                    marginRight: "15px",
-                    borderRadius: "50%",
-                  }}
+                  className={classes.answerAvatar}
                 />
                 <div>
-                  <p style={{ fontWeight: "bold" }}>{answer.username}</p>
-                  <p style={{ color: "gray" }}>{answer.answer}</p>
+                  <p className={classes.answerDetails}>{answer.username}</p>
+                  <p className={classes.answerText}>{answer.answer}</p>
                 </div>
               </div>
             ))
           ) : (
-            <p style={{ color: "gray" }}>
+            <p className={classes.noAnswers}>
               No answers yet. Be the first to answer!
             </p>
           )}
         </div>
 
         {/* Answer Form */}
-        <div style={{ marginBottom: "20px" }}>
+        <div className={classes.answerForm}>
           <h5>Answer The Top Question</h5>
-          <Link to="/questions/ask">
-            <button
-              style={{
-                color: "gray",
-                marginBottom: "10px",
-                border: "2px solid black",
-                backgroundColor: "#fff",
-              }}
-            >
-              Go to Question page
-            </button>
+          <Link to="/questions/ask" className={classes.linkButton}>
+            Go to Question page
           </Link>
 
           <textarea
-            placeholder="Your Answer..."
+            placeholder="Your answer ..."
             rows={4}
-            style={{ width: "100%", padding: "10px" }}
+            className={classes.answerTextarea}
             value={answer}
             onChange={(e) => setAnswer(e.target.value)}
           />
@@ -139,19 +115,12 @@ const Answer = () => {
         {/* Submit Button */}
         <button
           onClick={handleAnswerSubmit}
-          style={{
-            marginTop: "10px",
-            padding: "10px 20px",
-            backgroundColor: "#3f51b5",
-            color: "white",
-            border: "none",
-            cursor: "pointer",
-          }}
+          className={classes.submitButton}
         >
-          Post Your Answer
+          Post Answer
         </button>
-        {submitting && <p>{submitting}</p>}
-        {duplicatepost && <p>{duplicatepost}</p>}
+        {submitting && <p className={classes.submittingMessage}>{submitting}</p>}
+        {duplicatepost && <p className={classes.errorMessage}>{duplicatepost}</p>}
       </div>
     </Layout>
   );
