@@ -10,9 +10,7 @@ async function authenticationMiddleware(req, res, next) {
       .json({ msg: "Authentication invalid" });
   }
 
-  const token = authHeader.split(" ")[1]; // Get the token part after "Bearer"
-  console.log(authHeader);
-  console.log(token);
+  const token = authHeader.split(" ")[1]; // to get the token part after "Bearer"
   try {
     const { username, userid } = jwt.verify(token, process.env.JWT_SECRETKEY);
 
