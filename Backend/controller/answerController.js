@@ -54,7 +54,7 @@ const postAnswer = async (req, res) => {
   if (!questionid || !answer) {
     return res.status(400).json({
       error: "Bad Request",
-      message: "Please provide questionid and answer",
+      message: "Please provide answer",
     });
   }
 
