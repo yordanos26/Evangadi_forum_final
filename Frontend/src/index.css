@@ -1,4 +1,6 @@
 :root {
   --primary-color: #007bff;
   --primary-shade: #d49644;
+  --button-color: linear-gradient(310deg, #ff7800, #e33f00);;
+  --Text-color: linear-gradient(310deg, #000000, #e33f00);
 }
