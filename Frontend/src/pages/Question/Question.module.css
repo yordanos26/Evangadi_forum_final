@@ -4,9 +4,7 @@
     font-family: sans-serif;
  }
  /* first div or steps div */
- .steps{
-    margin: 0 30%;
- }
+
  .steps h3{
  font-size: 23px;
  font-weight: 600;
@@ -17,6 +15,21 @@
  .steps ul li {
     color: rgb(58, 57, 57);
     font-size: 15px;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 10px;
+ }
+ .steps ul li p{
+    color: rgb(58, 57, 57);
+    font-size: 21px;
+    margin-top: 0;
+ }
+ .heading{
+   font-size: 30px;
+   font-weight: 600;
+   text-align: center;
  }
  /* second div or Ask question div  */
  .question{
@@ -57,14 +70,15 @@
  .input2{
     padding:10px 0 150px 10px;
  }
- button{
+ .btn{
     background-color: #516cf1;
     border: none;
     padding: 10px;
     border-radius: 4px;
+    color: #fff;
     font-size: 15px;
-    color: aliceblue;
     text-align: left;
+    cursor: pointer;
  }
  .btnholder{
     padding: 0 10% 0.5% 10%;
@@ -93,7 +107,7 @@
     .input2 {
         padding: 10px 0 30px 20px;
     }
-    button {
+    .btn {
         padding: 8px;
         font-size: 14px;
     }

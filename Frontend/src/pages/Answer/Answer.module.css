@@ -1,74 +1,121 @@
-/* Main container for the page */
 .container {
-  margin-top: 20px;
-  width: 80%;
+  max-width: 800px;
   margin: 0 auto;
-  font-family: Arial, sans-serif;
-}
-
-/* Question section styling */
-.questionSection {
-  background-color: #f9f9f9;
   padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 30px;
-  border: 1px solid #ddd;
+
+ 
 }
 
-/* Answer section styling */
-.answersSection {
-  margin-bottom: 30px;
-}
-
-.answer {
-  background-color: #f1f1f1;
+.questionSection {
+  background-color: #ffffff;
   padding: 15px;
   border-radius: 8px;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: flex-start;
-}
-
-.answerProfile {
-  margin-right: 10px;
-}
-
-.answerProfile img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: #ddd;
-}
-
-/* Answer form styling */
-.answerForm {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
 }
 
-.formControl {
-  width: 100%;
-  height: 100px;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  resize: none;
+.questionTitle {
+  font-size: 1.5rem;
+  color: #333;
   margin-bottom: 10px;
 }
 
-.btnPrimary {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 100%;
+.questionDetails {
+  font-size: 1.25rem;
+  color: #555;
 }
 
-.btnPrimary:hover {
+.questionDescription {
+  font-size: 1rem;
+  color: #777;
+  line-height: 1.5;
+}
+
+.answersSection {
+  margin-top: 20px;
+}
+
+.answerItem {
+  display: flex;
+  align-items: flex-start;
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.answerAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.answerDetails {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.answerText {
+  margin: 5px 0;
+  color: #333;
+}
+
+.noAnswers {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+}
+
+.answerForm {
+  margin-top: 30px;
+  padding: 15px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.answerTextarea {
+  width: 100%;
+  padding: 4px;
+  height:200px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: none;
+  font-size: 1rem;
+  color: #333;
+}
+
+.submitButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.submitButton:hover {
   background-color: #0056b3;
+}
+
+.linkButton {
+  display: inline-block;
+  margin-top: 10px;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.submittingMessage {
+  color: #28a745;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+.errorMessage {
+  color: #dc3545;
+  font-size: 0.9rem;
+  margin-top: 10px;
 }

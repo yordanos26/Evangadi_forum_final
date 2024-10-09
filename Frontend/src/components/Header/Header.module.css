@@ -1,4 +1,3 @@
-
 .headerContainer {
   display: flex;
   justify-content: space-evenly;
@@ -7,8 +6,7 @@
   background-color: #fff;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   height: 40px;
-  margin:0 auto;
-
+  margin: 0 auto;
 }
 
 .logo img {
@@ -23,7 +21,6 @@
 .navLinks {
   display: flex;
   align-items: center;
-
   list-style: none;
   margin: 0;
   padding: 0;
@@ -44,18 +41,22 @@
 }
 
 .logoutButton {
-  background-color: #e5670a;
+  background-color: var(--primary-color);
   color: white;
   border: none;
-  padding: 8px 16px;
+  padding: 4px 28px;
   cursor: pointer;
 }
 .signInButton {
-  background-color: #e5670a;
+  background-color: var(--primary-color);
   color: white;
   border: none;
-  /* padding: 8px 16px; */
+  padding: 4px 28px;
+  border-radius: 10px;
   cursor: pointer;
+}
+.signInButton:hover{
+  background-color: #e5670a;
 }
 .signInButton a {
   color: #fff;
@@ -63,7 +64,7 @@
 /* Blue color for Sign In button - only on desktop */
 @media (min-width: 768px) {
   .navLinkItem a.signInLink {
-    background-color: #007bff; /* Blue background */
+    background-color: var(--primary-color);
     color: white; /* White text */
     border-radius: 4px; /* Optional rounded corners */
   }
@@ -112,14 +113,13 @@
   .navLinks {
     display: none;
   }
-  
 
   .mobileMenuIcon {
     display: block;
   }
 }
-@media(min-width: 768px) {
-    .mobileDropdown{
-      display: none;
-    }
+@media (min-width: 768px) {
+  .mobileDropdown {
+    display: none;
   }
+}
