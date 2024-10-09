@@ -14,6 +14,7 @@ function Auth() {
     <Layout>
       <div className={styles.authContainer}>
         <div className={styles.authContent}>
+        
           {isLogin ? (
         
             <Login onToggle={handleToggle} />

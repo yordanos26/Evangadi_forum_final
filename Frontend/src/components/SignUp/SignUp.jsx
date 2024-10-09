@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import classes from "./SignUp.module.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
+import axiosBaseURL from "../../Utility/ApiConfig";
 const Signup = ({ onToggle }) => {
   const [formData, setFormData] = useState({
     username: "",
@@ -23,8 +24,8 @@ const Signup = ({ onToggle }) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "http://localhost:5500/api/users/register",
+      const response = await axiosBaseURL.post(
+        "/users/register",
         {
           // Sending user registration data
           username: formData.username,
@@ -37,7 +38,7 @@ const Signup = ({ onToggle }) => {
       if (response.status === 200) {
         setSuccess("You registered successfully!"); // Handle success response
         setError(null); // clear any previous errors
-        navigate("/Auth");
+        navigate("/login");
       } else {
         setError(response.data.msg || "Registration failed."); // Handle error response
         setSuccess(null); // clear any previous success message

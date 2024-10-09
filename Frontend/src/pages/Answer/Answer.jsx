@@ -4,7 +4,8 @@ import axiosBaseURL from "../../Utility/ApiConfig";
 import Layout from "../../components/Layout/Layout";
 import { Link } from "react-router-dom";
 import classes from "./Answer.module.css"; // Import the CSS module
-
+import { RiAccountCircleFill } from "react-icons/ri";
+import { TbMessageQuestion } from "react-icons/tb";
 const Answer = () => {
   const { questionid } = useParams();
   const [question, setQuestion] = useState({});
@@ -48,10 +49,12 @@ const Answer = () => {
 
       setSubmitting("Answer submitted");
       setAnswer("");
+      
     } catch (error) {
       console.error("Failed to submit answer:", error);
       setSubmitting("");
       setDuplicatepost(error.response.data.message);
+      setDuplicatepost("")
     }
   };
 
@@ -60,9 +63,10 @@ const Answer = () => {
       <div className={classes.container}>
         {/* Question Section */}
         <div className={classes.questionSection}>
-          <h4 className={classes.questionTitle}>Question</h4>
+          <h4 className={classes.questionTitle}>Question Asked</h4>
           {question.title ? (
             <>
+            <TbMessageQuestion size={40} />
               <h6 className={classes.questionDetails}>{question.title}</h6>
               <p className={classes.questionDescription}>{question.description}</p>
             </>
@@ -78,13 +82,15 @@ const Answer = () => {
           {answers && answers.length > 0 ? (
             answers.map((answer, index) => (
               <div key={index} className={classes.answerItem}>
-                <img
-                  alt={answer.username}
-                  src={answer.avatarUrl}
-                  className={classes.answerAvatar}
-                />
-                <div>
+              <div className={classes.answerInfo}>
+                    <RiAccountCircleFill
+                      size={40}
+                      className={classes.answerAvatar}
+                    />
+                  
                   <p className={classes.answerDetails}>{answer.username}</p>
+                  </div>
+                <div>
                   <p className={classes.answerText}>{answer.answer}</p>
                 </div>
               </div>
@@ -99,7 +105,7 @@ const Answer = () => {
         {/* Answer Form */}
         <div className={classes.answerForm}>
           <h5>Answer The Top Question</h5>
-          <Link to="/questions/ask" className={classes.linkButton}>
+          <Link to="/" className={classes.HomelinkButton}>
             Go to Question page
           </Link>
 

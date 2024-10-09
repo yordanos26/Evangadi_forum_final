@@ -1,121 +1,135 @@
 .container {
   max-width: 800px;
-  margin: 0 auto;
+  margin: 40px auto;
   padding: 20px;
-
- 
+  border-radius: 8px;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 }
 
-.questionSection {
-  background-color: #ffffff;
-  padding: 15px;
+.questionSection,
+.answersSection,
+.answerForm {
+  margin-bottom: 24px;
+  padding: 20px;
+  /* background: #ffffff; */
   border-radius: 8px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .questionTitle {
-  font-size: 1.5rem;
-  color: #333;
-  margin-bottom: 10px;
+  font-size: 1.75rem;
+  margin-bottom: 12px;
+  color: var(--button-color);
+  padding-top: 18px;
 }
 
-.questionDetails {
-  font-size: 1.25rem;
-  color: #555;
+.questionDetails,
+.answerDetails {
+  font-size: 18px;
+  padding: 18px;
+  font-style: italic;
+  color: var(--text-color);
 }
 
-.questionDescription {
+.questionDescription,
+.answerText {
   font-size: 1rem;
-  color: #777;
-  line-height: 1.5;
+  color: var(--text-color);
+  line-height: 1.6;
 }
 
-.answersSection {
-  margin-top: 20px;
+.answersSection h5 {
+  margin-bottom: 12px;
+  color: var(--primary-color);
 }
 
 .answerItem {
   display: flex;
   align-items: flex-start;
-  padding: 10px;
-  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 16px;
+  padding: 4px;
+  background: #f8f9fa;
+  border-radius: 8px;
 }
 
 .answerAvatar {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  margin-right: 10px;
-}
-
-.answerDetails {
-  font-weight: bold;
-  color: #007bff;
-}
-
-.answerText {
-  margin: 5px 0;
-  color: #333;
+  margin-right: 16px;
 }
 
 .noAnswers {
+  font-size: 1rem;
+  color: var(--muted-color);
   text-align: center;
-  color: #999;
-  font-style: italic;
 }
 
-.answerForm {
-  margin-top: 30px;
-  padding: 15px;
-  background-color: #ffffff;
+.answerForm h5 {
+  font-size: 1.25rem;
+  color: var(--secondary-color);
+}
+
+.answerInfo{
+  display: flex;
+  flex-direction: column;
+}
+
+.submitButton {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-top: 16px;
+  border: none;
   border-radius: 8px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+  background: var(--primary-color);
+  color: #fff;
+  text-align: center;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+.HomelinkButton{
+  display: block;
+  width: 20%;
+  padding: 12px;
+  margin-top: 16px;
+  border: none;
+  border-radius: 8px;
+  background: var(--primary-color);
+  color: #fff;
+  text-align: center;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.linkButton:hover,
+.submitButton:hover {
+  background: var(--secondary-color);
 }
 
 .answerTextarea {
   width: 100%;
-  padding: 4px;
-  height:200px;
+  padding: 12px;
+  border-radius: 8px;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  resize: none;
   font-size: 1rem;
-  color: #333;
+  color: var(--text-color);
+  margin-top: 12px;
+  background: #f8f9fa;
 }
 
-.submitButton {
-  background-image: linear-gradient(310deg, #ff7800, #e33f00);
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 10px 15px;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background-color 0.3s ease;
-}
-
-.submitButton:hover {
-  background-color: #0056b3;
-}
-
-.linkButton {
-  display: inline-block;
-  margin-top: 10px;
-  color: #007bff;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.submittingMessage {
-  color: #28a745;
-  font-size: 0.9rem;
-  margin-top: 10px;
+.submittingMessage{
+  margin-top: 12px;
+  font-size: 1.8rem;
+  color: #057b54;
+  text-align: center;
 }
 
 .errorMessage {
-  color: #dc3545;
-  font-size: 0.9rem;
-  margin-top: 10px;
+  margin-top: 12px;
+  font-size: 1.8rem;
+  color: #e74c3c;
+  text-align: center;
 }

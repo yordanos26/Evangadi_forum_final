@@ -32,10 +32,10 @@ const Login = ({ onToggle }) => {
         email: formData.email,
         password: formData.password,
       });
-      alert("Login Successful");
+      // alert("Login Successful");
       // console.log("Login successful:", response.data);
-      localStorage.setItem("token", response.data.token);
       setSuccessMessage("Login Successful");
+      localStorage.setItem("token", response.data.token);
       // Redirect  based on successful login
       navigate("/");
     } catch (error) {
