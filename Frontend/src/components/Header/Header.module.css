@@ -7,6 +7,7 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   height: 40px;
   margin: 0 auto;
+  font-size: 18px;
 }
 
 .logo img {
@@ -41,14 +42,14 @@
 }
 
 .logoutButton {
-  background-color: var(--primary-color);
+  background-image: var(--button-color);
   color: white;
   border: none;
   padding: 4px 28px;
   cursor: pointer;
 }
 .signInButton {
-  background-color: var(--primary-color);
+  background-image: var(--button-color);
   color: white;
   border: none;
   padding: 4px 28px;

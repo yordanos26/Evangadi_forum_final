@@ -85,7 +85,7 @@
 }
 
 .submitButton {
-  background-color: #007bff;
+  background-image: linear-gradient(310deg, #ff7800, #e33f00);
   color: white;
   border: none;
   border-radius: 5px;
