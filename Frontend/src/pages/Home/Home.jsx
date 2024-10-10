@@ -5,8 +5,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { AppState } from "../../Routes/Router";
 import axiosBaseURL from "../../Utility/ApiConfig";
 import { RiAccountCircleFill } from "react-icons/ri";
+import Auth from "../Auth/Auth";
 function Home() {
   const { user } = useContext(AppState);
+
+  // console.log(user);
+
+  // State to store questions
   const [questions, setQuestions] = useState([]); // To store questions
   const [loading, setLoading] = useState(true); // To manage loading state
   const [searchTerm, setSearchTerm] = useState(""); // State for search input
@@ -64,7 +69,7 @@ function Home() {
             Ask Question
           </button>
 
-          <h2>Welcome: {user.username}</h2>
+          <h2>Welcome, {user.username}</h2>
         </div>
 
         {/* Search Bar */}

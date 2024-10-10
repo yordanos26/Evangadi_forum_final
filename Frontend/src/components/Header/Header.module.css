@@ -33,7 +33,7 @@
 
 .navLinkItem a,
 .logoutButton {
-  /* color: #000; */
+ 
   text-decoration: none;
   padding: 8px 16px;
   display: flex;
@@ -62,23 +62,22 @@
 .signInButton a {
   color: #fff;
 }
-/* Blue color for Sign In button - only on desktop */
+
 @media (min-width: 768px) {
   .navLinkItem a.signInLink {
     background-color: var(--primary-color);
-    color: white; /* White text */
-    border-radius: 4px; /* Optional rounded corners */
+    color: white; 
+    border-radius: 4px; 
   }
 }
 
-/* Mobile menu icon */
 .mobileMenuIcon {
   display: none;
   font-size: 24px;
   cursor: pointer;
 }
 
-/* Mobile dropdown menu */
+
 .mobileDropdown {
   position: absolute;
   top: 60px;
@@ -109,7 +108,7 @@
   background-color: #f1f1f1;
 }
 
-/* Hide desktop menu on mobile */
+
 @media (max-width: 768px) {
   .navLinks {
     display: none;
@@ -123,4 +122,14 @@
   .mobileDropdown {
     display: none;
   }
+}
+@media (max-width: 480px) {
+
+ .headerContainer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+ }
+
 }
