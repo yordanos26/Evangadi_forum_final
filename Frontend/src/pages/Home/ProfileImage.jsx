@@ -120,7 +120,7 @@ const ProfileImage = () => {
       try {
         const response = await axiosBaseURL.post("/images/upload", formData, {
           headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
 

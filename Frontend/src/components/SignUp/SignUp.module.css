@@ -12,6 +12,7 @@
   display: flex;
   justify-content: space-between;
   gap: 10px;
+  width: 95%;
 }
 .signup_container h2 {
   text-align: center;
@@ -84,7 +85,10 @@ input:focus {
 
 @media screen and (max-width: 768px) {
   .name_fields {
-    display: flex;
+    display: block;
     flex-direction: column;
   }
-}
+
+  .signup_container {
+    height: 100%;
+    }}

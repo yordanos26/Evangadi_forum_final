@@ -12,14 +12,11 @@ function Home() {
   const { user } = useContext(AppState);
 
   // console.log(user);
-
   // State to store questions
   const [questions, setQuestions] = useState([]); // To store questions
   const [loading, setLoading] = useState(true); // To manage loading state
   const [searchTerm, setSearchTerm] = useState(""); // State for search input
-
   const navigate = useNavigate();
-
   // Fetch questions from the backend
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -32,7 +29,7 @@ function Home() {
 
         console.log("Fetched questions:", response.data);
         setQuestions(response.data.questions);
-         // Set the questions from response
+        // Set the questions from response
       } catch (err) {
         console.error("Failed to fetch questions:", err);
       } finally {
@@ -85,7 +82,6 @@ function Home() {
 
             <h3>Welcome, {user.username}</h3>
           </div>
-
           {/* Search Bar */}
           <div className={styles.searchContainer}>
             <input
@@ -96,7 +92,6 @@ function Home() {
               onChange={handleSearchChange} // Trigger search on input change
             />
           </div>
-
           <h3 className={styles.questionHeader}>Questions</h3>
           <hr style={{ marginBottom: "20px" }} />
 
@@ -179,7 +174,7 @@ function Home() {
           )}
         </main>
         <div className={styles.profileImageContainer}>
-        <ProfileImage />
+          {/* <ProfileImage /> */}
         </div>
       </div>
     </Layout>

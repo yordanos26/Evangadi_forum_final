@@ -22,7 +22,7 @@ const Header = () => {
   return (
     <header className={styles.headerContainer}>
       <div className={styles.logo}>
-        <Link to="/">
+        <Link to="">
           <img src={logo} alt="Evangadi logo" />
         </Link>
       </div>
@@ -104,7 +104,7 @@ const Header = () => {
               </>
             )}
           </ul>
-          <ProfileImage />
+          {/* <ProfileImage /> */}
         </div>
       )}
     </header>

@@ -38,7 +38,7 @@ const Signup = ({ onToggle }) => {
       if (response.status === 200) {
         setSuccess("You registered successfully!"); // Handle success response
         setError(null); // clear any previous errors
-        navigate("/login");
+        window.location.href = "/";
       } else {
         setError(response.data.msg || "Registration failed."); // Handle error response
         setSuccess(null); // clear any previous success message

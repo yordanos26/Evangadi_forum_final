@@ -8,6 +8,7 @@ import Auth from "../pages/Auth/Auth";
 import { createContext } from "react";
 import axiosBaseURL from "../Utility/ApiConfig";
 import HowItWorks from "../components/How it works/Howitworks";
+import Signup from "../components/SignUp/SignUp";
 
 export const AppState = createContext();
 
@@ -32,7 +33,7 @@ function RouterApp() {
 
   useEffect(() => {
     checkUser();
-  }, );
+  }, []);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -54,12 +55,15 @@ function RouterApp() {
 
   const isLoggedIn = !!localStorage.getItem("token");
   return (
-    <AppState.Provider value={{ user, isLoggedIn, handleLogout ,handleLogin}}>
+    <AppState.Provider value={{ user, isLoggedIn, handleLogout, handleLogin }}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/questions/ask" element={<Question />} />
-        <Route path="/questions/getQuestions/:questionid" element={<Question />} />
+        <Route
+          path="/questions/getQuestions/:questionid"
+          element={<Question />}
+        />
         <Route path="/getQuestions/:questionid" element={<Answer />} />
         <Route path="/login" element={<Auth />} />
         <Route path="/how-it-works" element={<HowItWorks />} />

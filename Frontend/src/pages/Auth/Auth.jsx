@@ -14,17 +14,17 @@ function Auth() {
     <Layout>
       <div className={styles.authContainer}>
         <div className={styles.authContent}>
-        
-          {isLogin ? (
-        
-            <Login onToggle={handleToggle} />
-          ) : (
-            <Signup onToggle={handleToggle} />
-          )}
-        </div>
-        <div className={styles.about}>
+          <div>
+            {isLogin ? (
+              <Login onToggle={handleToggle} />
+            ) : (
+              <Signup onToggle={handleToggle} />
+            )}
+          </div>
+
+          <div className={styles.about}>
             <About />
-        
+          </div>
         </div>
       </div>
     </Layout>

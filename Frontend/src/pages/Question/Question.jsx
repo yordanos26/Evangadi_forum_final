@@ -37,6 +37,7 @@ function Question() {
         console.log("successful");
         setTitle("");
         setDescription("");
+        window.location.href = "/";
       }
     } catch (error) {
       setError("Dupilcate post. Please try again.");

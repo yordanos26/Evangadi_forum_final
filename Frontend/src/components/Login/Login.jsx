@@ -37,11 +37,11 @@ const Login = ({ onToggle }) => {
       setSuccessMessage("Login Successful");
       localStorage.setItem("token", response.data.token);
       // Redirect  based on successful login
-      navigate("/");
+      window.location.href = "/";
     } catch (error) {
       // Handle error, show erroerror?.response?.data?.msgr message to the user
       console.error("Login failed:");
-   
+
       setErrorMessage(error?.response?.data?.msg);
     }
   };

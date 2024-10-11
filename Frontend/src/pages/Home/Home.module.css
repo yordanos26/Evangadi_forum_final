@@ -134,11 +134,6 @@
   animation: spin 1s linear infinite;
 }
 
-/* .profileImageContainer {
-  position: absolute;
-  top: 10px;
-  right: 300px;
-} */
 
 /* Spinner animation keyframes */
 @keyframes spin {
@@ -170,9 +165,6 @@
   margin: 20px 0; /* Space above and below */
 }
 
-/* Home.module.css */
-
-/* Ask Button styles */
 
 .askButton:hover {
   background-color: #e6640d; /* Darker shade on hover */
@@ -187,11 +179,14 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 780px) {
   .askButton {
     font-size: 12px; /* Even smaller font size */
     padding: 6px 12px; /* Further reduce padding */
     width: 40%; /* Full width on small screens */
+  }
+  .profileImageContainer{
+    display: none;
   }
 }
 
