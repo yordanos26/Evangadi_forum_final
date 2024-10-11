@@ -51,10 +51,21 @@ async function getAllQuestions(req, res) {
   try {
     const username = req.user.username; // Get the username from the auth middleware
 
+    // Fetch the logged-in user's profile image
+    const [userResult] = await dbConnection.query(
+      "SELECT profileimg FROM users WHERE username = ?",
+      [username]
+    );
+    const profileimg = userResult[0]?.profileimg || null; // Use the first result or null if not found
+
     const [results] = await dbConnection.query(
-      "SELECT u.username, q.title ,q.questionid FROM questions q, users u where q.userid=u.userid order by tag DESC"
-    ); // Use await and destructure the result
-    res.json({ username, results }); // Send the result as a JSON response
+      "SELECT u.username, u.profileimg, q.title ,q.questionid, q.tag FROM questions q, users u where q.userid=u.userid order by tag DESC"
+    );
+    
+    // Use await and destructure the result
+    res.json({ 
+      user: { username, profileimg },      // updated
+      questions: results }); // Send the result as a JSON response
   } catch (err) {
     res.status(500).json({ error: err.message }); // Handle errors properly
   }
@@ -78,7 +89,7 @@ async function getQuestionDetail(req, res) {
 
     // Fetch answers along with the user who posted the answer
     const [answersResult] = await dbConnection.query(
-      `SELECT a.answerid, a.answer, u.username FROM answers a
+      `SELECT a.answerid, a.answer, u.username, u.profileimg FROM answers a
           LEFT JOIN users u ON a.userid = u.userid
           WHERE a.questionid = ?`,
       [questionid]

@@ -32,7 +32,7 @@ function RouterApp() {
 
   useEffect(() => {
     checkUser();
-  }, []);
+  }, );
 
   useEffect(() => {
     const token = localStorage.getItem("token");

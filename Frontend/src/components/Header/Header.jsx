@@ -5,6 +5,7 @@ import logo from "../../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faSignInAlt, faSignOutAlt, faBars } from "@fortawesome/free-solid-svg-icons";
 import { AppState } from "../../Routes/Router"; // Adjust the import path
+import ProfileImage from "../../pages/Home/ProfileImage";
 
 const Header = () => {
   const { isLoggedIn, handleLogout } = useContext(AppState);
@@ -79,10 +80,12 @@ const Header = () => {
                     <FontAwesomeIcon icon={faHome} /> How it works
                   </Link>
                 </li>
-                <li onClick={() => {
-                  setMobileMenuOpen(false);
-                  onLogoutClick();
-                }}>
+                <li
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onLogoutClick();
+                  }}
+                >
                   <FontAwesomeIcon icon={faSignOutAlt} /> Log Out
                 </li>
               </>
@@ -101,6 +104,7 @@ const Header = () => {
               </>
             )}
           </ul>
+          <ProfileImage />
         </div>
       )}
     </header>
