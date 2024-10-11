@@ -1,99 +1,267 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axiosBaseURL from "../../Utility/ApiConfig";
 import Layout from "../../components/Layout/Layout";
-import { Link } from "react-router-dom";
 import classes from "./Answer.module.css"; // Import the CSS module
 import { RiAccountCircleFill } from "react-icons/ri";
 import { TbMessageQuestion } from "react-icons/tb";
+import { FaThumbsUp, FaThumbsDown } from "react-icons/fa"; // Import icons for like/dislike
 import { toast } from "react-toastify";
+
 const Answer = () => {
   const { questionid } = useParams();
   const [question, setQuestion] = useState({});
   const [answers, setAnswers] = useState([]);
-  const [answer, setAnswer] = useState("");
+  const [answerText, setAnswerText] = useState("");
   const [submitting, setSubmitting] = useState("");
-  const [duplicatepost, setDuplicatepost] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [userReactions, setUserReactions] = useState({}); // Track user reactions
 
+  // Retrieve user data (Assuming you have stored userId and token in localStorage upon login)
+  const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
+
+  // Load user reactions from localStorage on component mount
   useEffect(() => {
+    if (userId && questionid) {
+      const storedReactions = localStorage.getItem(
+        `answerReactions_${questionid}_${userId}`
+      );
+      if (storedReactions) {
+        setUserReactions(JSON.parse(storedReactions));
+      }
+    }
+  }, [questionid, userId]);
+
+  // Save user reactions to localStorage whenever they change
+  useEffect(() => {
+    if (userId && questionid) {
+      localStorage.setItem(
+        `answerReactions_${questionid}_${userId}`,
+        JSON.stringify(userReactions)
+      );
+    }
+  }, [userReactions, questionid, userId]);
+
+  // Load like and dislike counts from localStorage
+  useEffect(() => {
+    const storedCounts = localStorage.getItem(`answerCounts_${questionid}`);
+    const parsedCounts = storedCounts ? JSON.parse(storedCounts) : {};
+
     const fetchQuestion = async () => {
       try {
         const response = await axiosBaseURL.get(
           `/questions/getQuestions/${questionid}`,
           {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              Authorization: `Bearer ${token}`,
             },
           }
         );
         setQuestion(response.data.question);
-        setAnswers(response.data.answers || []);
+        // Initialize each answer with likes and dislikes from localStorage
+        const initializedAnswers = response.data.answers.map((ans) => ({
+          ...ans,
+          likes: parsedCounts[ans._id]?.likes || 0,
+          dislikes: parsedCounts[ans._id]?.dislikes || 0,
+          id: ans._id, // Use _id as the unique identifier
+        }));
+        setAnswers(initializedAnswers || []);
       } catch (error) {
-        toast.error(error.response.data.message);
         console.error("Failed to fetch question:", error);
       }
     };
 
-    fetchQuestion();
-  }, [questionid]);
+    if (questionid && token) {
+      fetchQuestion();
+    }
+  }, [questionid, token]);
 
+  // Handle submitting a new answer
   const handleAnswerSubmit = async () => {
+    if (answerText.trim() === "") {
+      setErrorMessage("Answer cannot be empty.");
+      return;
+    }
+
     try {
-      await axiosBaseURL.post(
+      const response = await axiosBaseURL.post(
         `/answers`,
-        { questionid, answer },
+        { questionid, answer: answerText.trim() },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
 
-      toast.success("Answer submitted successfully");
-      // setSubmitting("Answer submitted");
-      setAnswer("");
+     toast.success("Answer Submitted Successfully")
+      setAnswerText("");
 
-      // Trigger fade-out effect before page reload
-      document.body.classList.add(classes.hidden);
-      // Delay the page reload to allow the fade-out transition
-      setTimeout(() => {
-        window.location.reload();
-      }, 3000); // Delay to match the transition duration (0.5s)
+      // Add the new answer to the state
+      const newAnswer = {
+        ...response.data,
+        likes: 0,
+        dislikes: 0,
+        id: response.data._id, // Ensure the new answer has an id
+      };
+      setAnswers([newAnswer, ...answers]);
+
+      // Initialize counts in localStorage
+      const storedCounts =
+        JSON.parse(localStorage.getItem(`answerCounts_${questionid}`)) || {};
+      const updatedCounts = {
+        ...storedCounts,
+        [newAnswer.id]: { likes: 0, dislikes: 0 },
+      };
+      localStorage.setItem(
+        `answerCounts_${questionid}`,
+        JSON.stringify(updatedCounts)
+      );
+
+      // Clear error message if any
+      setErrorMessage("");
     } catch (error) {
-      toast.error(error.response.data.message);
-      console.error("Failed to submit answer:", error);
+      // console.error("Failed to submit answer:", error);
       setSubmitting("");
-      setDuplicatepost(error.response.data.message);
-      setDuplicatepost("")
+      toast.error(error.response?.data?.message || "An error occurred.");
     }
+    
+  };
+
+  // Handle liking an answer
+  const handleLike = (answerId) => {
+    const currentReaction = userReactions[answerId];
+
+    // If the user already liked this answer, do nothing
+    if (currentReaction === "liked") return;
+
+    // Clone current counts from localStorage
+    const storedCounts =
+      JSON.parse(localStorage.getItem(`answerCounts_${questionid}`)) || {};
+    const answerCounts = storedCounts[answerId] || { likes: 0, dislikes: 0 };
+
+    // Determine the new reaction
+    let likesChange = 0;
+    let dislikesChange = 0;
+
+    if (currentReaction === "disliked") {
+      // If previously disliked, remove dislike
+      dislikesChange = -1;
+    }
+
+    // Set the new reaction to liked
+    likesChange = 1;
+
+    // Update counts based on reaction
+    const updatedCounts = {
+      ...storedCounts,
+      [answerId]: {
+        likes: (answerCounts.likes || 0) + likesChange,
+        dislikes: (answerCounts.dislikes || 0) + dislikesChange,
+      },
+    };
+
+    // Update localStorage
+    localStorage.setItem(
+      `answerCounts_${questionid}`,
+      JSON.stringify(updatedCounts)
+    );
+
+    // Update state counts
+    setAnswers((prevAnswers) =>
+      prevAnswers.map((ans) =>
+        ans.id === answerId
+          ? {
+              ...ans,
+              likes: ans.likes + likesChange,
+              dislikes: ans.dislikes + dislikesChange,
+            }
+          : ans
+      )
+    );
+
+    // Update user reactions
+    setUserReactions((prevReactions) => ({
+      ...prevReactions,
+      [answerId]: "liked",
+    }));
+  };
+
+  // Handle disliking an answer
+  const handleDislike = (answerId) => {
+    const currentReaction = userReactions[answerId];
+
+    // If the user already disliked this answer, do nothing
+    if (currentReaction === "disliked") return;
+
+    // Clone current counts from localStorage
+    const storedCounts =
+      JSON.parse(localStorage.getItem(`answerCounts_${questionid}`)) || {};
+    const answerCounts = storedCounts[answerId] || { likes: 0, dislikes: 0 };
+
+    // Determine the new reaction
+    let likesChange = 0;
+    let dislikesChange = 0;
+
+    if (currentReaction === "liked") {
+      // If previously liked, remove like
+      likesChange = -1;
+    }
+
+    // Set the new reaction to disliked
+    dislikesChange = 1;
+
+    // Update counts based on reaction
+    const updatedCounts = {
+      ...storedCounts,
+      [answerId]: {
+        likes: (answerCounts.likes || 0) + likesChange,
+        dislikes: (answerCounts.dislikes || 0) + dislikesChange,
+      },
+    };
+
+    // Update localStorage
+    localStorage.setItem(
+      `answerCounts_${questionid}`,
+      JSON.stringify(updatedCounts)
+    );
+
+    // Update state counts
+    setAnswers((prevAnswers) =>
+      prevAnswers.map((ans) =>
+        ans.id === answerId
+          ? {
+              ...ans,
+              likes: ans.likes + likesChange,
+              dislikes: ans.dislikes + dislikesChange,
+            }
+          : ans
+      )
+    );
+
+    // Update user reactions
+    setUserReactions((prevReactions) => ({
+      ...prevReactions,
+      [answerId]: "disliked",
+    }));
   };
 
   return (
     <Layout>
       <div className={classes.container}>
-        {/* Question Section */}
-        <div className={classes.questionSection}>
-          <h4 className={classes.questionTitle}>Question Asked</h4>
-          {question.title ? (
-            <>
-              <TbMessageQuestion size={40} />
-              <h6 className={classes.questionDetails}>{question.title}</h6>
-              <p className={classes.questionDescription}>
-                {question.description}
-              </p>
-            </>
-          ) : (
-            <h6 className={classes.questionDetails}>Loading question...</h6>
-          )}
-        </div>
+        <h1 className={classes.questionTitle}>
+          <TbMessageQuestion /> {question.title}
+        </h1>
+        <p className={classes.questionDetails}>{question.description}</p>
 
-        {/* Community Answer Section */}
+        {/* Display Answers */}
         <div className={classes.answersSection}>
-          <h5>Answer From The Community</h5>
+          <h5>Answers From The Community</h5>
 
           {answers && answers.length > 0 ? (
-            answers.map((answer, index) => (
-              <div key={index} className={classes.answerItem}>
+            answers.map((ans) => (
+              <div key={ans.id} className={classes.answerItem}>
                 <div className={classes.answerInfo}>
                   <div
                     style={{
@@ -104,14 +272,15 @@ const Answer = () => {
                       position: "relative",
                     }}
                   >
-                    {answer.profileimg ? (
+                    {ans.profileimg ? (
                       <img
-                        src={`http://localhost:5500${answer.profileimg}`}
+                        src={`http://localhost:5500${ans.profileimg}`}
+                        alt={`${ans.username}'s profile`}
                         style={{
                           width: "4em",
                           height: "4em",
                           borderRadius: "50%",
-                          marginRight: "2em",
+                          objectFit: "cover",
                         }}
                       />
                     ) : (
@@ -121,14 +290,41 @@ const Answer = () => {
                           width: "100%",
                           height: "100%",
                           objectFit: "cover",
+                          color: "#ccc",
                         }}
                       />
                     )}
                   </div>
-                  <p className={classes.answerDetails}>{answer.username}</p>
+                  <p className={classes.answerDetails}>{ans.username}</p>
                 </div>
-                <div>
-                  <p className={classes.answerText}>{answer.answer}</p>
+                <div className={classes.answerContent}>
+                  <p className={classes.answerText}>{ans.answer}</p>
+                  <div className={classes.reactions}>
+                    <button
+                      className={`${classes.likeButton} ${
+                        userReactions[ans.id] === "liked"
+                          ? classes.activeLike
+                          : ""
+                      }`}
+                      onClick={() => handleLike(ans.id)}
+                      aria-label="Like"
+                      disabled={userReactions[ans.id] === "disliked"} // Disable like if disliked
+                    >
+                      <FaThumbsUp /> {ans.likes}
+                    </button>
+                    <button
+                      className={`${classes.dislikeButton} ${
+                        userReactions[ans.id] === "disliked"
+                          ? classes.activeDislike
+                          : ""
+                      }`}
+                      onClick={() => handleDislike(ans.id)}
+                      aria-label="Dislike"
+                      disabled={userReactions[ans.id] === "liked"} // Disable dislike if liked
+                    >
+                      <FaThumbsDown /> {ans.dislikes}
+                    </button>
+                  </div>
                 </div>
               </div>
             ))
@@ -149,12 +345,11 @@ const Answer = () => {
           <textarea
             placeholder="Your answer ..."
             rows={4}
-            className={classes.answerTextarea}
-            value={answer}
-            onChange={(e) => setAnswer(e.target.value)}
+            className={classes.answerdescription}
+            value={answerText}
+            onChange={(e) => setAnswerText(e.target.value)}
           />
         </div>
-
         {/* Submit Button */}
         <button onClick={handleAnswerSubmit} className={classes.submitButton}>
           Post Answer
@@ -162,9 +357,7 @@ const Answer = () => {
         {submitting && (
           <p className={classes.submittingMessage}>{submitting}</p>
         )}
-        {duplicatepost && (
-          <p className={classes.errorMessage}>{duplicatepost}</p>
-        )}
+        {errorMessage && <p className={classes.errorMessage}>{errorMessage}</p>}
       </div>
     </Layout>
   );

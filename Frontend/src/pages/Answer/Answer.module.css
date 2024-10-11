@@ -108,7 +108,7 @@
 
 .linkButton:hover,
 .submitButton:hover {
-  background: var(--secondary-color);
+  background:green;
 }
 
 .answerTextarea {
@@ -144,4 +144,51 @@
 
 .fade-out.hidden {
   opacity: 0;
+}
+.answerdescription {
+  height: 150px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  resize: none;
+  font-size: 16px;
+  width: 97%;
+  margin-top: 10px;
+}
+/* Reactions (Like and Dislike Buttons) */
+.reactions {
+  display: flex;
+  gap: 10px;
+}
+
+.likeButton,
+.dislikeButton {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: transparent;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 1.3rem;
+  transition: background-color 0.3s, color 0.3s, opacity 0.3s;
+    border: none;
+}
+
+.likeButton:hover:not(:disabled){
+  color: #007bff; /* Blue color on hover */
+}
+.dislikeButton:hover:not(:disabled) {
+   color: #ff4800; /* red color on hover */
+}
+
+.disabledButton {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.likeButton:disabled,
+.dislikeButton:disabled {
+  cursor: not-allowed;
 }
