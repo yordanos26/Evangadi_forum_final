@@ -27,7 +27,7 @@ function Home() {
           },
         });
 
-        console.log("Fetched questions:", response.data);
+        // console.log("Fetched questions:", response.data);
         setQuestions(response.data.questions);
         // Set the questions from response
       } catch (err) {
@@ -80,7 +80,7 @@ function Home() {
               Ask Question
             </button>
 
-            <h3>Welcome, {user.username}</h3>
+            <h3 className={styles.username}><span className={styles.span}>Welcome</span>, {user.username}</h3>
           </div>
           {/* Search Bar */}
           <div className={styles.searchContainer}>
@@ -158,7 +158,15 @@ function Home() {
                     </div>
                     <div className={styles.questionText}>
                       <strong>{q.title}</strong>
-                      <p>{q.tag}</p>
+                      <p>
+                        <p>
+                          {new Date(q.tag).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          })}
+                        </p>
+                      </p>
                     </div>
                     <button
                       onClick={() => handleQuestionClick(q.questionid)}
@@ -174,7 +182,7 @@ function Home() {
           )}
         </main>
         <div className={styles.profileImageContainer}>
-          {/* <ProfileImage /> */}
+          <ProfileImage />
         </div>
       </div>
     </Layout>

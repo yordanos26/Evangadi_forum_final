@@ -46,7 +46,7 @@ async function register(req, res) {
     // Successfully created the user
     return res
       .status(StatusCodes.CREATED)
-      .json({ msg: "User created successfully" });
+      .json({ msg: "You have Registerd successfully" });
   } catch (error) {
     // Log the error for debugging purposes
     console.error("Error creating user:", error.message);
@@ -77,7 +77,7 @@ async function login(req, res) {
     if (user.length === 0) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .json({ msg: "Invalid credentials, please try again" });
+        .json({ msg: "Incorrect email or password. Please try again." });
     }
 
     // Check if the password is correct
@@ -85,7 +85,7 @@ async function login(req, res) {
     if (!validPassword) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .json({ msg: "Invalid credentials, please try again" });
+        .json({ msg: "Incorrect email or password. Please try again." });
     }
     // If login is successful, return a success message (or a JWT token for authentication)
     // Create and send a JWT

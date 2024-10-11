@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import axiosBaseURL from "../../Utility/ApiConfig";
 import { RiAccountCircleFill } from "react-icons/ri";
-
+import { toast } from "react-toastify";
 
 const ProfileImage = () => {
   const [image, setImage] = useState(null); // Holds the uploaded image
@@ -30,15 +30,16 @@ const ProfileImage = () => {
 
         // console.log("Fetched questions:", response.data);
         setUserresult(response.data.user); // updated
-        console.log(response.data.user);
+        // console.log(response.data.user);
       } catch (err) {
         console.error("Failed to fetch questions:", err);
-      } 
+      }
     };
 
     fetchQuestions();
   }, []);
 
+  const notify = () => toast("Wow so easy !");
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -93,7 +94,7 @@ const ProfileImage = () => {
       return;
     } else {
       setUploadimage(false);
-      alert("Image uploaded successfully");
+      toast.success("Image uploaded successfully");
     }
 
     const croppedCanvas = document.createElement("canvas");
@@ -217,7 +218,9 @@ const ProfileImage = () => {
             boxShadow: "0 0 5px rgba(0, 0, 0, 0.2)",
           }}
         >
-          <p style={{ fontSize: "1em" }}>Upload an Image</p>
+          <p style={{ fontSize: "1em" }} onClick={notify}>
+            Upload an Image
+          </p>
           <form>
             <input
               style={{ marginBottom: "2em" }}
@@ -242,7 +245,7 @@ const ProfileImage = () => {
               textAlign: "center",
             }}
           >
-           {userresult.profileimg ? "Change" : "Upload"}
+            {userresult.profileimg ? "Change" : "Upload"}
           </button>
 
           <div

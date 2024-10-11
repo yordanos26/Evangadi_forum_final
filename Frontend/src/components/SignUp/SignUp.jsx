@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import classes from "./SignUp.module.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-// import axios from "axios";
 import axiosBaseURL from "../../Utility/ApiConfig";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
+
 const Signup = ({ onToggle }) => {
   const [formData, setFormData] = useState({
     username: "",
@@ -12,54 +14,133 @@ const Signup = ({ onToggle }) => {
     email: "",
     password: "",
   });
+
+  const [formErrors, setFormErrors] = useState({});
   const navigate = useNavigate();
-  const [error, setError] = useState(null); // for error message
-  const [success, setSuccess] = useState(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Regular expressions for validation
+  const validateForm = () => {
+    const errors = {};
+    const usernameRegex = /^[a-zA-Z0-9]+$/; // alphanumeric only
+    const nameRegex = /^[a-zA-Z]+$/; // alphabets only
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // simple email regex
+
+    // Validate username
+    if (!usernameRegex.test(formData.username)) {
+      errors.username = "Username must be alphanumeric.";
+    }
+
+    // Validate first and last name
+    if (!nameRegex.test(formData.firstName)) {
+      errors.firstName = "First name must contain only letters.";
+    }
+    if (!nameRegex.test(formData.lastName)) {
+      errors.lastName = "Last name must contain only letters.";
+    }
+
+    // Validate email
+    if (!emailRegex.test(formData.email)) {
+      errors.email = "Invalid email format.";
+    }
+
+    // Validate password (for simplicity, let's say it must be at least 6 characters)
+    if (formData.password.length < 6) {
+      errors.password = "Password must be at least 6 characters.";
+    }
+
+    setFormErrors(errors);
+
+    // If there are errors, show SweetAlert popup for each error
+    if (Object.keys(errors).length > 0) {
+      // You can customize these alerts as needed
+      if (errors.username) {
+        Swal.fire({
+          icon: "error",
+          title: "Invalid Username",
+          text: errors.username,
+        });
+      } else if (errors.firstName) {
+        Swal.fire({
+          icon: "error",
+          title: "Invalid First Name",
+          text: errors.firstName,
+        });
+      } else if (errors.lastName) {
+        Swal.fire({
+          icon: "error",
+          title: "Invalid Last Name",
+          text: errors.lastName,
+        });
+      } else if (errors.email) {
+        Swal.fire({
+          icon: "error",
+          title: "Invalid Email",
+          text: errors.email,
+        });
+      } else if (errors.password) {
+        Swal.fire({
+          icon: "error",
+          title: "Invalid Password",
+          text: errors.password,
+        });
+      }
+
+      return false; // Prevent form submission if there are validation errors
+    }
+
+    return true; // Form is valid if there are no errors
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validate form before submitting
+    if (!validateForm()) {
+      return; // Do not submit if there are validation errors
+    }
+
     try {
-      const response = await axiosBaseURL.post(
-        "/users/register",
-        {
-          // Sending user registration data
-          username: formData.username,
-          firstname: formData.firstName,
-          lastname: formData.lastName,
-          email: formData.email,
-          password: formData.password,
-        }
-      );
-      if (response.status === 200) {
-        setSuccess("You registered successfully!"); // Handle success response
-        setError(null); // clear any previous errors
-        window.location.href = "/";
+      const response = await axiosBaseURL.post("/users/register", {
+        username: formData.username,
+        firstname: formData.firstName,
+        lastname: formData.lastName,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (response.status === 201) {
+        Swal.fire({
+          icon: "success",
+          title: "Registration successful!",
+          text: "You have been registered successfully.",
+        }).then(() => {
+          // Optionally, navigate to another page after success
+          window.location.href = "/";
+        });
       } else {
-        setError(response.data.msg || "Registration failed."); // Handle error response
-        setSuccess(null); // clear any previous success message
+        Swal.fire({
+          icon: "error",
+          title: "Registration failed",
+          text: response.data.msg || "An error occurred during registration.",
+        });
       }
     } catch (err) {
-      setError(
-        err.response?.data?.msg ||
-          "Error submitting the form. Please try again."
-      ); // Enhanced error handling
-      setSuccess(null); // clear any previous success message
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text:
+          err.response?.data?.msg ||
+          "Error submitting the form. Please try again.",
+      });
     }
   };
 
   return (
     <div className={classes.signup_container}>
-      <div className={classes.Error_container}>
-        {/* Display error message */}
-        {error && <p className={classes.error}>{error}</p>}
-        {/* Display success message */}
-        {success && <p className={classes.success}>{success}</p>}{" "}
-      </div>
       <h2>Join the network</h2>
       <p>
         Already have an account?{" "}
@@ -76,6 +157,7 @@ const Signup = ({ onToggle }) => {
           onChange={handleChange}
           required
         />
+
         <div className={classes.name_fields}>
           <input
             type="text"
@@ -85,6 +167,7 @@ const Signup = ({ onToggle }) => {
             onChange={handleChange}
             required
           />
+
           <input
             type="text"
             name="lastName"
@@ -94,6 +177,7 @@ const Signup = ({ onToggle }) => {
             required
           />
         </div>
+
         <input
           type="email"
           name="email"
@@ -102,6 +186,7 @@ const Signup = ({ onToggle }) => {
           onChange={handleChange}
           required
         />
+
         <input
           type="password"
           name="password"

@@ -23,7 +23,7 @@ function RouterApp() {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log("User data:", data); // Debug log
+      // console.log("User data:", data); // Debug log
       setUser(data);
     } catch (error) {
       console.log(error.response);

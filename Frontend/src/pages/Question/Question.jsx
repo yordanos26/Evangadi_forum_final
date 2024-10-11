@@ -3,7 +3,7 @@ import Layout from "../../components/Layout/Layout";
 import axiosBaseURL from "../../Utility/ApiConfig"; // Import your configured axios instance
 import classes from "./Question.module.css";
 import { FaCircleArrowRight } from "react-icons/fa6";
-
+import { toast } from "react-toastify";
 function Question() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -33,14 +33,18 @@ function Question() {
 
       if (response.status === 201) {
         // alert("Question posted successfully!");
-        setSuccess(" Your Question posted successfully!");
+        toast.success("Question posted successfully!");
+        // setSuccess(" Your Question posted successfully!");
         console.log("successful");
         setTitle("");
         setDescription("");
+          setTimeout(() => {
         window.location.href = "/";
+      }, 4000);
       }
     } catch (error) {
-      setError("Dupilcate post. Please try again.");
+      toast.error(error.response.data.msg);
+      setError(error.response.data.msg || "Error posting question.");
       console.log(error.response.data.msg);
       // Log the error response for better debugging
       // alert("Error posting question.");
@@ -91,7 +95,7 @@ function Question() {
                   />
                   <textarea
                     placeholder="Question Description "
-                    className={classes.input2}
+                    className={classes.description}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                   />

@@ -4,6 +4,7 @@ import Signup from "../../components/SignUp/SignUp";
 import Login from "../../components/Login/Login";
 import styles from "./Auth.module.css";
 import About from "../../components/About/About";
+
 function Auth() {
   const [isLogin, setIsLogin] = useState(true);
   const handleToggle = () => {

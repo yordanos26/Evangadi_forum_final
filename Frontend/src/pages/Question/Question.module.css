@@ -67,7 +67,7 @@
 
 
 .input1, .input2 {
-  width:100%;
+  width:97%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -83,6 +83,19 @@
   gap: 10px;
 }
 
+.description {
+  height: 150px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  resize: none;
+  font-size: 16px;
+}
+
+.input2 {
+  width: 100%;
+  margin-top: 10px;
+}
 
 
 .btnholder {

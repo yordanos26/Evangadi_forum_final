@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import classes from "./Answer.module.css"; // Import the CSS module
 import { RiAccountCircleFill } from "react-icons/ri";
 import { TbMessageQuestion } from "react-icons/tb";
-// import { use } from "../../../../Backend/routes/userRoute";
+import { toast } from "react-toastify";
 const Answer = () => {
   const { questionid } = useParams();
   const [question, setQuestion] = useState({});
@@ -29,6 +29,7 @@ const Answer = () => {
         setQuestion(response.data.question);
         setAnswers(response.data.answers || []);
       } catch (error) {
+        toast.error(error.response.data.message);
         console.error("Failed to fetch question:", error);
       }
     };
@@ -48,17 +49,18 @@ const Answer = () => {
         }
       );
 
-      setSubmitting("Answer submitted");
+      toast.success("Answer submitted successfully");
+      // setSubmitting("Answer submitted");
       setAnswer("");
 
       // Trigger fade-out effect before page reload
       document.body.classList.add(classes.hidden);
-
       // Delay the page reload to allow the fade-out transition
       setTimeout(() => {
         window.location.reload();
-      }, 1000); // Delay to match the transition duration (0.5s)
+      }, 3000); // Delay to match the transition duration (0.5s)
     } catch (error) {
+      toast.error(error.response.data.message);
       console.error("Failed to submit answer:", error);
       setSubmitting("");
       setDuplicatepost(error.response.data.message);

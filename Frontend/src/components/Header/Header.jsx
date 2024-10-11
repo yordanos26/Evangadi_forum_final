@@ -104,7 +104,7 @@ const Header = () => {
               </>
             )}
           </ul>
-          {/* <ProfileImage /> */}
+          <ProfileImage />
         </div>
       )}
     </header>

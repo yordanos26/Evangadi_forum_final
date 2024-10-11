@@ -45,14 +45,15 @@
   background-image: var(--button-color);
   color: white;
   border: none;
-  padding: 4px 28px;
+  padding: 14px 28px;
+  border-radius: 10px;
   cursor: pointer;
 }
 .signInButton {
   background-image: var(--button-color);
   color: white;
   border: none;
-  padding: 4px 28px;
+  padding: 14px 28px;
   border-radius: 10px;
   cursor: pointer;
 }

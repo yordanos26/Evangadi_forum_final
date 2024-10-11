@@ -38,6 +38,23 @@
   text-align: center;
  
 }
+.span{
+  color: #fe750b;
+  font-weight: bold;
+  font-size: 28px;
+  font-style: oblique;
+  margin-right: 10px;
+  margin-left: 10px;
+  
+}
+.username{
+  font-size: 32px;
+}
+
+
+
+
+
 
 /* Search input field styling */
 .searchInput {
@@ -199,3 +216,4 @@
   text-decoration: none;
   color: black;
 }
+

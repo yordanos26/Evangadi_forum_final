@@ -1,48 +1,79 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import axios from 'axios';
 import styles from "./Login.module.css";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import axiosBaseURL from "../../Utility/ApiConfig";
+import Swal from "sweetalert2";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Login = ({ onToggle }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  // Form validation using toast for errors
+  const validateForm = () => {
+    const { email, password } = formData;
+
+    if (!email) {
+      toast.error("Please provide an email address.", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      return false;
+    }
+
+    if (!password) {
+      toast.error("Please provide a password.", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      return false;
+    }
+
+    return true; // Form is valid
+  };
+
   // Handler for form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.email || !formData.password) {
-      alert("Please provide all required information");
-      return;
+    // Validate form before submitting
+    if (!validateForm()) {
+      return; // Stop form submission if validation fails
     }
+
     try {
-      // Add your backend URL here
       const response = await axiosBaseURL.post("/users/login", {
         email: formData.email,
         password: formData.password,
       });
-      // alert("Login Successful");
-      // console.log("Login successful:", response.data);
-      setSuccessMessage("Login Successful");
-      localStorage.setItem("token", response.data.token);
-      // Redirect  based on successful login
-      window.location.href = "/";
-    } catch (error) {
-      // Handle error, show erroerror?.response?.data?.msgr message to the user
-      console.error("Login failed:");
 
-      setErrorMessage(error?.response?.data?.msg);
+      // Show SweetAlert2 on successful login
+      Swal.fire({
+        title: "Good job!",
+        text: "Login Successful",
+        icon: "success",
+      });
+
+      // Save token and navigate to another page
+      localStorage.setItem("token", response.data.token);
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 2000);
+    } catch (error) {
+      // Handle error, show error message using SweetAlert2
+      Swal.fire({
+        title: "Oops!",
+        text: error?.response?.data?.msg || "Login failed",
+        icon: "error",
+      });
     }
   };
 
@@ -53,12 +84,7 @@ const Login = ({ onToggle }) => {
 
   return (
     <div className={styles.loginContainer}>
-      {/* Display error message */}
-      {errorMessage && <p className={styles.error}>{errorMessage}</p>}
-      {/* Display success message */}
-      {successMessage && (
-        <p className={styles.success}>{successMessage}</p>
-      )}{" "}
+      <ToastContainer /> {/* Add Toast container here */}
       <h2 className={styles.title}>Login to your account</h2>
       <p className={styles.subtitle}>
         Don’t have an account?{" "}
