@@ -6,6 +6,8 @@ import { AppState } from "../../Routes/Router";
 import axiosBaseURL from "../../Utility/ApiConfig";
 import { RiAccountCircleFill } from "react-icons/ri";
 import Auth from "../Auth/Auth";
+import ProfileImage from "./ProfileImage";
+import { TbBackground } from "react-icons/tb";
 function Home() {
   const { user } = useContext(AppState);
 
@@ -28,8 +30,9 @@ function Home() {
           },
         });
 
-        // console.log("Fetched questions:", response.data);
-        setQuestions(response.data.results); // Set the questions from response
+        console.log("Fetched questions:", response.data);
+        setQuestions(response.data.questions);
+         // Set the questions from response
       } catch (err) {
         console.error("Failed to fetch questions:", err);
       } finally {
@@ -62,79 +65,123 @@ function Home() {
 
   return (
     <Layout>
-      {/* Main Content */}
-      <main className={styles.mainContent}>
-        <div className={styles.headerContainer}>
-          <button className={styles.askButton} onClick={handleAskQuestionClick}>
-            Ask Question
-          </button>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          position: "relative",
+          zIndex: "1",
+        }}
+      >
+        {/* Main Content */}
+        <main className={styles.mainContent}>
+          <div className={styles.headerContainer}>
+            <button
+              className={styles.askButton}
+              onClick={handleAskQuestionClick}
+            >
+              Ask Question
+            </button>
 
-          <h2>Welcome, {user.username}</h2>
-        </div>
-
-        {/* Search Bar */}
-        <div className={styles.searchContainer}>
-          <input
-            type="text"
-            className={styles.searchInput}
-            placeholder="Search for questions..."
-            value={searchTerm}
-            onChange={handleSearchChange} // Trigger search on input change
-          />
-        </div>
-
-        <h3 className={styles.questionHeader}>Questions</h3>
-        <hr style={{ marginBottom: "20px" }} />
-
-        {/* Loading Indicator */}
-        {loading ? (
-          <div className={styles.loadingSpinner}>
-            <div className={styles.spinner}></div>
+            <h3>Welcome, {user.username}</h3>
           </div>
-        ) : // Check for no matches found
-        filteredQuestions.length === 0 ? (
-          <div className={styles.noMatchMessage}>
-            No matching questions found.
+
+          {/* Search Bar */}
+          <div className={styles.searchContainer}>
+            <input
+              type="text"
+              className={styles.searchInput}
+              placeholder="Search for questions..."
+              value={searchTerm}
+              onChange={handleSearchChange} // Trigger search on input change
+            />
           </div>
-        ) : (
-          // Question List
-          <ul className={styles.questionList}>
-            {filteredQuestions.map((q, index) => (
-              <Link
-                to={`/getQuestions/${q.questionid}`}
-                key={index}
-                className={styles.questionLink}
-              >
-                <li className={styles.questionItem}>
-                  {/* <img
- 
-                    alt={q.username}
-                    src={q.avatarUrl}
-                    className={styles.questionAvatar}
-                  /> */}
-                  <div className={styles.questionInfo}>
-                    <RiAccountCircleFill
-                      size={80}
-                      className={styles.questionAvatar}
-                    />
-                    <p>{q.username}</p>
-                  </div>
-                  <div className={styles.questionText}>
-                    <strong>{q.title}</strong>
-                  </div>
-                  <button
-                    onClick={() => handleQuestionClick(q.questionid)}
-                    className={styles.questionButton}
-                  >
-                    ➡
-                  </button>
-                  <hr />
-                </li>
-              </Link>
-            ))}
-          </ul>
-        )}
-      </main>
+
+          <h3 className={styles.questionHeader}>Questions</h3>
+          <hr style={{ marginBottom: "20px" }} />
+
+          {/* Loading Indicator */}
+          {loading ? (
+            <div className={styles.loadingSpinner}>
+              <div className={styles.spinner}></div>
+            </div>
+          ) : // Check for no matches found
+          filteredQuestions.length === 0 ? (
+            <div className={styles.noMatchMessage}>
+              No matching questions found.
+            </div>
+          ) : (
+            // Question List
+            <ul className={styles.questionList}>
+              {filteredQuestions.map((q, index) => (
+                <Link
+                  to={`/getQuestions/${q.questionid}`}
+                  key={index}
+                  className={styles.questionLink}
+                >
+                  <li className={styles.questionItem}>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        marginRight: "2em",
+                      }}
+                    >
+                      <div
+                        style={{
+                          borderRadius: "50%",
+                          width: "4em",
+                          height: "4em",
+                          overflow: "hidden",
+                          position: "relative",
+                        }}
+                      >
+                        {q.profileimg ? (
+                          <img
+                            // ref=
+                            src={`http://localhost:5500${q.profileimg}`}
+                            style={{
+                              position: "absolute",
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                            }}
+                          />
+                        ) : (
+                          <RiAccountCircleFill
+                            style={{
+                              position: "absolute",
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                            }}
+                          />
+                        )}
+                      </div>
+                      <p style={{ fontWeight: "bold" }}>{q.username}</p>
+                    </div>
+                    <div className={styles.questionText}>
+                      <strong>{q.title}</strong>
+                      <p>{q.tag}</p>
+                    </div>
+                    <button
+                      onClick={() => handleQuestionClick(q.questionid)}
+                      className={styles.questionButton}
+                    >
+                      ➡
+                    </button>
+                    <hr />
+                  </li>
+                </Link>
+              ))}
+            </ul>
+          )}
+        </main>
+        <div className={styles.profileImageContainer}>
+        <ProfileImage />
+        </div>
+      </div>
     </Layout>
   );
 }

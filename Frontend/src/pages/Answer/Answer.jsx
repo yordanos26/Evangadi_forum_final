@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import classes from "./Answer.module.css"; // Import the CSS module
 import { RiAccountCircleFill } from "react-icons/ri";
 import { TbMessageQuestion } from "react-icons/tb";
+// import { use } from "../../../../Backend/routes/userRoute";
 const Answer = () => {
   const { questionid } = useParams();
   const [question, setQuestion] = useState({});
@@ -49,7 +50,14 @@ const Answer = () => {
 
       setSubmitting("Answer submitted");
       setAnswer("");
-      
+
+      // Trigger fade-out effect before page reload
+      document.body.classList.add(classes.hidden);
+
+      // Delay the page reload to allow the fade-out transition
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000); // Delay to match the transition duration (0.5s)
     } catch (error) {
       console.error("Failed to submit answer:", error);
       setSubmitting("");
@@ -66,9 +74,11 @@ const Answer = () => {
           <h4 className={classes.questionTitle}>Question Asked</h4>
           {question.title ? (
             <>
-            <TbMessageQuestion size={40} />
+              <TbMessageQuestion size={40} />
               <h6 className={classes.questionDetails}>{question.title}</h6>
-              <p className={classes.questionDescription}>{question.description}</p>
+              <p className={classes.questionDescription}>
+                {question.description}
+              </p>
             </>
           ) : (
             <h6 className={classes.questionDetails}>Loading question...</h6>
@@ -82,14 +92,39 @@ const Answer = () => {
           {answers && answers.length > 0 ? (
             answers.map((answer, index) => (
               <div key={index} className={classes.answerItem}>
-              <div className={classes.answerInfo}>
-                    <RiAccountCircleFill
-                      size={40}
-                      className={classes.answerAvatar}
-                    />
-                  
-                  <p className={classes.answerDetails}>{answer.username}</p>
+                <div className={classes.answerInfo}>
+                  <div
+                    style={{
+                      borderRadius: "50%",
+                      width: "4em",
+                      height: "4em",
+                      overflow: "hidden",
+                      position: "relative",
+                    }}
+                  >
+                    {answer.profileimg ? (
+                      <img
+                        src={`http://localhost:5500${answer.profileimg}`}
+                        style={{
+                          width: "4em",
+                          height: "4em",
+                          borderRadius: "50%",
+                          marginRight: "2em",
+                        }}
+                      />
+                    ) : (
+                      <RiAccountCircleFill
+                        style={{
+                          position: "absolute",
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    )}
                   </div>
+                  <p className={classes.answerDetails}>{answer.username}</p>
+                </div>
                 <div>
                   <p className={classes.answerText}>{answer.answer}</p>
                 </div>
@@ -119,14 +154,15 @@ const Answer = () => {
         </div>
 
         {/* Submit Button */}
-        <button
-          onClick={handleAnswerSubmit}
-          className={classes.submitButton}
-        >
+        <button onClick={handleAnswerSubmit} className={classes.submitButton}>
           Post Answer
         </button>
-        {submitting && <p className={classes.submittingMessage}>{submitting}</p>}
-        {duplicatepost && <p className={classes.errorMessage}>{duplicatepost}</p>}
+        {submitting && (
+          <p className={classes.submittingMessage}>{submitting}</p>
+        )}
+        {duplicatepost && (
+          <p className={classes.errorMessage}>{duplicatepost}</p>
+        )}
       </div>
     </Layout>
   );

@@ -73,6 +73,8 @@
 .answerInfo{
   display: flex;
   flex-direction: column;
+  align-items: center;
+  margin-right: 2em;
 }
 
 .submitButton {
@@ -132,4 +134,14 @@
   font-size: 1.8rem;
   color: #e74c3c;
   text-align: center;
+}
+
+/* Inside Answer.module.css */
+.fade-out {
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+
+.fade-out.hidden {
+  opacity: 0;
 }
